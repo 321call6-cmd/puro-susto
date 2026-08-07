@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PURO SUSTO — Halloween 2026 · 31 de octubre · Tijuana</title>
+  <meta name="description" content="Puro susto. Pura fiesta. Sábado 31 de octubre 2026, 6 PM, Salón Castilla, Tijuana. Confirma tu asistencia… si te atreves.">
+
+  <!-- Open Graph / invitación al compartir -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PURO SUSTO — Halloween 2026">
+  <meta property="og:description" content="Estás invitado. Sábado 31 de octubre · 6 PM · Salón Castilla, Tijuana. Entra y confirma… si te atreves.">
+  <meta property="og:url" content="https://puro-susto.pages.dev/">
+  <meta property="og:image" content="https://puro-susto.pages.dev/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_MX">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PURO SUSTO — Halloween 2026">
+  <meta name="twitter:description" content="Estás invitado. 31 de octubre · Salón Castilla, Tijuana. Entra y confirma… si te atreves.">
+  <meta name="twitter:image" content="https://puro-susto.pages.dev/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Tipografías del brand: Creepster (display) + Space Grotesk (UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ==================== ICONOS (monstruos del brand) ==================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Calavera -->
+    <symbol id="i-calavera" viewBox="0 0 24 24">
+      <path d="M12 2C7 2 3.5 5.6 3.5 10.3c0 2.8 1.3 5 3.2 6.4v3c0 .7.6 1.3 1.3 1.3h1.2v-2a.8.8 0 0 1 1.6 0v2h2.4v-2a.8.8 0 0 1 1.6 0v2H16c.7 0 1.3-.6 1.3-1.3v-3c1.9-1.4 3.2-3.6 3.2-6.4C20.5 5.6 17 2 12 2zM8.6 12.6a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm6.8 0a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM12 13l1.2 2.2h-2.4L12 13z"/>
+    </symbol>
+    <!-- Fantasma -->
+    <symbol id="i-fantasma" viewBox="0 0 24 24">
+      <path d="M12 2C7.6 2 4.5 5.4 4.5 9.8V21c0 .8.9 1.2 1.5.7l1.6-1.4 1.7 1.5c.4.3.9.3 1.3 0L12 20.4l1.4 1.4c.4.3.9.3 1.3 0l1.7-1.5 1.6 1.4c.6.5 1.5.1 1.5-.7V9.8C19.5 5.4 16.4 2 12 2zM9.3 10.6a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8zm5.4 0a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8zM12 15.2c-.9 0-1.6-.9-1.6-1.9h3.2c0 1-.7 1.9-1.6 1.9z"/>
+    </symbol>
+    <!-- Murciélago -->
+    <symbol id="i-murcielago" viewBox="0 0 24 24">
+      <path d="M12 6.5c.5 0 1 .3 1.2.8l.4-1.5.9 1.6c3.2-2.6 7.3-1.5 8.5 1-1.7-.2-2.9.4-3.4 1.6-.1 1.4-1.1 2.3-2.6 2.3-.2 1-1 1.7-2 1.9l-.4 3.3-2.6-2-2.6 2-.4-3.3c-1-.2-1.8-.9-2-1.9-1.5 0-2.5-.9-2.6-2.3C3.9 8.8 2.7 8.2 1 8.4c1.2-2.5 5.3-3.6 8.5-1l.9-1.6.4 1.5c.2-.5.7-.8 1.2-.8z"/>
+    </symbol>
+    <!-- Calabaza -->
+    <symbol id="i-calabaza" viewBox="0 0 24 24">
+      <path d="M13.6 4.6c.6-1.1 1.6-1.9 3-2.1l.4 1.9c-.9.1-1.5.5-1.9 1.1 3.9.5 6.9 3.7 6.9 8.1 0 4.8-3.6 8.4-10 8.4S2 18.4 2 13.6C2 9 5.3 5.7 9.5 5.4c1.4-.1 2.9.1 4.1.8V4.6h0zM7.6 12.9l3-1.6-1.2 2.7-1.8-1.1zm8.8 0-1.8 1.1-1.2-2.7 3 1.6zm-8.2 4.2c2.5 1.4 5.1 1.4 7.6 0l-1.1 2.1h-1.5l-.7-1-.7 1h-1.5l-.7-1-.7 1-.7-2.1z"/>
+    </symbol>
+    <!-- Vampiro (colmillos) -->
+    <symbol id="i-vampiro" viewBox="0 0 24 24">
+      <path d="M2 7c2.6 2.4 6 3.7 10 3.7S19.4 9.4 22 7c-.5 3.2-2.4 5.6-5.2 6.8l-1.3 4.7-1.7-4.2c-.6.1-1.2.1-1.8.1s-1.2 0-1.8-.1l-1.7 4.2-1.3-4.7C4.4 12.6 2.5 10.2 2 7z"/>
+    </symbol>
+    <!-- Bruja (sombrero) -->
+    <symbol id="i-bruja" viewBox="0 0 24 24">
+      <path d="M14.5 3.5 8 10.5l-1.5 6h11L14.5 3.5zM3 18h18c.6 0 1 .4 1 1s-.4 1-1 1H3c-.6 0-1-.4-1-1s.4-1 1-1z"/>
+    </symbol>
+    <!-- Candado (votación dormida) -->
+    <symbol id="i-candado" viewBox="0 0 24 24">
+      <path d="M12 2a5 5 0 0 0-5 5v3H6c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2h-1V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 7a1.8 1.8 0 0 1 1 3.3V19a1 1 0 0 1-2 0v-1.7a1.8 1.8 0 0 1 1-3.3z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ==================== NAV ==================== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#top">Puro Susto</a>
+    <nav class="links">
+      <a href="#asistencia">Asistencia</a>
+      <a href="#confirmados">Confirmados</a>
+      <a href="#cuota">Cuota</a>
+      <a href="#horario">La noche</a>
+      <a href="#jam">Jam</a>
+      <a href="#votacion">Premios</a>
+      <a href="#lugar">Lugar</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== HERO ==================== -->
+<main id="top">
+<section class="hero">
+  <h1>Puro<br>Susto</h1>
+  <div class="tagline">Puro susto. Pura fiesta.</div>
+  <div class="meta">
+    Sábado 31 de octubre 2026 · 6:00 PM – 1:00 AM
+    <span class="niebla">Salón Castilla · Blvd. Viñas del Mar, Tijuana</span>
+  </div>
+
+  <div class="countdown" id="countdown" aria-label="Cuenta regresiva">
+    <div class="count-cell"><b id="cd-d">—</b><span>días</span></div>
+    <div class="count-cell"><b id="cd-h">—</b><span>horas</span></div>
+    <div class="count-cell"><b id="cd-m">—</b><span>min</span></div>
+    <div class="count-cell"><b id="cd-s">—</b><span>seg</span></div>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-rojo" href="#asistencia">¿Te atreves? Confirma</a>
+    <a class="btn btn-fantasma" href="#" id="btn-calendario">Agendar en mi calendario</a>
+    <a class="btn btn-fantasma" href="#" id="btn-compartir">Pasar la invitación</a>
+  </div>
+</section>
+
+<!-- ==================== RSVP ==================== -->
+<section id="asistencia">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-calavera"/></svg>
+      <div>
+        <h2>Confirma tu asistencia</h2>
+        <span class="caption">La lista es pública · los acompañantes pagan cuota completa</span>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <form id="form-rsvp">
+          <label for="f-nombre">Tu nombre completo</label>
+          <input type="text" id="f-nombre" placeholder="Tu nombre, si te atreves…" required maxlength="60" autocomplete="name">
+
+          <label for="f-whats">Tu WhatsApp (para coordinar el pago, no se publica)</label>
+          <input type="tel" id="f-whats" placeholder="664 123 4567" required maxlength="20" autocomplete="tel">
+
+          <label for="f-acomp">¿Cuántos acompañantes traes?</label>
+          <select id="f-acomp">
+            <option value="0" selected>Voy solo/a</option>
+            <option value="1">+1 acompañante</option>
+            <option value="2">+2 acompañantes</option>
+            <option value="3">+3 acompañantes</option>
+            <option value="4">+4 acompañantes</option>
+          </select>
+
+          <label for="f-acomp-nombres" id="l-acomp-nombres" class="hidden">Nombres de tus acompañantes</label>
+          <input type="text" id="f-acomp-nombres" class="hidden" placeholder="Ej. Laura, Beto" maxlength="120">
+
+          <div class="mt-2">
+            <button type="submit" class="btn btn-rojo" id="btn-rsvp">¡Voy!</button>
+          </div>
+          <div class="form-msg" id="rsvp-msg" role="status"></div>
+        </form>
+      </div>
+
+      <div class="card card-destacada">
+        <h3>Lo que estás aceptando</h3>
+        <div class="regla"><svg><use href="#i-calavera"/></svg><p>Disfraz <b>obligatorio</b>. Entrar sin disfraz cuesta <b>$200</b>, y ese dinero va directo al bote del mejor disfraz.</p></div>
+        <div class="regla"><svg><use href="#i-vampiro"/></svg><p>La cuota es <b>transparente</b>: todos los gastos se publican aquí abajo y se dividen entre los confirmados.</p></div>
+        <div class="regla"><svg><use href="#i-bruja"/></svg><p>Los datos de pago se comparten <b>por WhatsApp</b>, no aquí. Te escribimos al confirmar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONFIRMADOS + CUOTA ==================== -->
+<section id="confirmados">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-vampiro"/></svg>
+      <div>
+        <h2>Los que ya cayeron</h2>
+        <span class="caption" id="ultima-actualizacion">Lista pública de confirmados</span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat stat-rojo"><b id="stat-personas">—</b><span>personas confirmadas</span></div>
+      <div class="stat"><b id="stat-cuota">—</b><span>cuota por persona (en vivo)</span></div>
+      <div class="stat"><b id="stat-bote">—</b><span>bote del mejor disfraz</span></div>
+    </div>
+
+    <div class="lista-confirmados" id="lista-confirmados">
+      <span class="chip niebla">Cargando la lista…</span>
+    </div>
+  </div>
+</section>
+
+<section id="cuota" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="grid-2">
+      <div class="card">
+        <h3>Desglose de gastos</h3>
+        <p class="caption">Transparencia total: todo gasto aparece aquí</p>
+        <table class="gastos">
+          <thead><tr><th>Concepto</th><th>Tipo</th><th style="text-align:right">Monto</th></tr></thead>
+          <tbody id="tabla-gastos">
+            <tr><td class="niebla" colspan="3">Cargando gastos…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>¿Cómo se calcula tu cuota?</h3>
+        <p class="mt-1">Los gastos <b>fijos</b> (salón, mobiliario, trofeos) se dividen entre todas las personas confirmadas. Los gastos <b>por persona</b> (comida) se suman tal cual por cabeza.</p>
+        <p class="mt-2 niebla">Entre más seamos, más barato sale el susto. La cuota final se congela unos días antes de la fiesta.</p>
+        <p class="mt-2" id="cuota-formula" style="font-size: 20px; font-weight: 600;"></p>
+        <div class="mt-2">
+          <span class="badge-rojo">El estatus de pago lo llevan los anfitriones</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HORARIO Y REGLAS ==================== -->
+<section id="horario">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-bruja"/></svg>
+      <div>
+        <h2>La noche</h2>
+        <span class="caption">Sábado 31 de octubre · Salón Castilla</span>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Horario</h3>
+        <ul class="timeline">
+          <li><span class="hora">6:00 PM</span><span>Abren las puertas. Música, botana y niebla.</span></li>
+          <li><span class="hora">8:00 PM</span><span>Cena.</span></li>
+          <li><span class="hora">9:30 PM</span><span>Pasarela de disfraces: todos desfilan.</span></li>
+          <li><span class="hora">10:00 PM</span><span>Se abre la votación desde tu celular, aquí mismo.</span></li>
+          <li><span class="hora">11:00 PM</span><span>Premiación: 6 trofeos esqueleto.</span></li>
+          <li><span class="hora">11:30 PM</span><span>Jam libre y juegos hasta que el cuerpo aguante.</span></li>
+          <li><span class="hora">1:00 AM</span><span>Fin del susto. Nos vemos el próximo año.</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Reglas de la casa</h3>
+        <div class="regla"><svg><use href="#i-calavera"/></svg><p><b>Sin disfraz, pagas $200.</b> Van íntegros al bote del mejor disfraz. Sin excepciones, sin llorar.</p></div>
+        <div class="regla"><svg><use href="#i-vampiro"/></svg><p><b>Transparencia total.</b> Cada peso gastado se publica en el desglose. Nada por debajo de la mesa.</p></div>
+        <div class="regla"><svg><use href="#i-fantasma"/></svg><p><b>Acompañantes bienvenidos</b> — pagan cuota completa igual que todos.</p></div>
+        <div class="regla"><svg><use href="#i-calabaza"/></svg><p><b>El pago se coordina por WhatsApp.</b> Aquí nunca vas a ver números de cuenta: si alguien te los manda "del sitio", es un fantasma estafador.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== JAM ==================== -->
+<section id="jam">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-murcielago"/></svg>
+      <div>
+        <h2>El Jam</h2>
+        <span class="caption">Tú pones la música · Spotify Jam en vivo</span>
+      </div>
+    </div>
+    <div class="card">
+      <p>La música de la noche la armamos entre todos con un <b>Jam de Spotify</b>: te unes desde tu celular y encolas las canciones que quieras — de Thriller a los corridos, sin juzgar (bueno, un poco).</p>
+      <p class="mt-2 niebla">El link del Jam se activa la noche de la fiesta y aparece aquí mismo. Mientras tanto, ve armando tu lista mental.</p>
+      <div class="mt-2">
+        <a class="btn btn-fantasma hidden" id="btn-jam" href="#" target="_blank" rel="noopener">Unirme al Jam</a>
+        <span class="badge-rojo" id="jam-dormido">Jam disponible el 31 de octubre</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOTOS ==================== -->
+<section id="fotos" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-fantasma"/></svg>
+      <div>
+        <h2>Fotos y videos</h2>
+        <span class="caption">El álbum compartido de la noche</span>
+      </div>
+    </div>
+    <div class="card">
+      <p>Todo lo que captures esa noche —fotos, videos, evidencia comprometedora— va al <b>álbum compartido</b> para que nadie se quede sin su copia.</p>
+      <div class="mt-2">
+        <a class="btn btn-fantasma hidden" id="btn-album" href="#" target="_blank" rel="noopener">Abrir el álbum</a>
+        <span class="badge-rojo" id="album-dormido">El álbum se abre el día de la fiesta</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== JUEGOS ==================== -->
+<section id="juegos" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-calabaza"/></svg>
+      <div>
+        <h2>Juegos</h2>
+        <span class="caption">Propón el tuyo · los anfitriones arman el line-up</span>
+      </div>
+    </div>
+    <div class="card">
+      <p>Habrá juegos toda la noche. ¿Tienes uno que nunca falla — charadas del terror, el asesino, lo que sea? <b>Mándanos tu propuesta por WhatsApp</b> y entra al line-up de la noche.</p>
+      <div class="mt-2">
+        <a class="btn btn-fantasma" id="btn-sugerir-juego" href="#" target="_blank" rel="noopener">Sugerir un juego</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VOTACIÓN ==================== -->
+<section id="votacion">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-calavera"/></svg>
+      <div>
+        <h2>Premios y votación</h2>
+        <span class="caption">6 trofeos esqueleto · se vota desde tu celular</span>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 20px;">
+      <div class="card card-destacada">
+        <h3>Se vota aquí, el 31</h3>
+        <p><b>Mejor disfraz</b> — se lleva trofeo y el bote completo 💰<br>
+        <b>Más creativo</b> · <b>Más ridículo</b> · <b>Más terrorífico</b> — trofeo y gloria eterna.</p>
+        <p class="mt-2 niebla">1 voto por persona por categoría. El sistema no perdona tramposos.</p>
+      </div>
+      <div class="card">
+        <h3>Los comodines</h3>
+        <p>Los otros <b>2 trofeos</b> los deciden los anfitriones en vivo, esa noche, por puro capricho y justicia poética. Nadie está a salvo.</p>
+      </div>
+    </div>
+
+    <!-- Estado dormido -->
+    <div class="card votacion-dormida" id="votacion-dormida">
+      <svg><use href="#i-candado"/></svg>
+      <h3>La votación está sellada</h3>
+      <p class="niebla">Se abre el 31 de octubre durante la fiesta. Vuelve aquí desde tu celular cuando los anfitriones den la señal.</p>
+    </div>
+
+    <!-- Estado activo (lo despierta Config.votacion desde la hoja) -->
+    <div class="hidden" id="votacion-activa">
+      <div class="card">
+        <label for="v-votante">¿Quién vota? (tu nombre, como confirmaste)</label>
+        <input type="text" id="v-votante" placeholder="Tu nombre" maxlength="60">
+        <div id="categorias-voto" class="mt-2"></div>
+        <div class="mt-2">
+          <button class="btn btn-rojo" id="btn-votar">Enviar mis votos</button>
+        </div>
+        <div class="form-msg" id="voto-msg" role="status"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LUGAR ==================== -->
+<section id="lugar">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-murcielago"/></svg>
+      <div>
+        <h2>La guarida</h2>
+        <span class="caption">Salón Castilla · Blvd. Viñas del Mar, Tijuana</span>
+      </div>
+    </div>
+    <iframe class="mapa-frame" id="mapa"
+      src="https://www.google.com/maps?q=Sal%C3%B3n%20Castilla%2C%20Blvd.%20Vi%C3%B1as%20del%20Mar%2C%20Tijuana&output=embed"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      title="Mapa al Salón Castilla"></iframe>
+    <div class="mt-2 center">
+      <a class="btn btn-fantasma" href="https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n+Castilla%2C+Blvd.+Vi%C3%B1as+del+Mar%2C+Tijuana" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FAQ ==================== -->
+<section id="faq" style="padding-bottom: 100px;">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-fantasma"/></svg>
+      <div>
+        <h2>Preguntas del más allá</h2>
+        <span class="caption">FAQ</span>
+      </div>
+    </div>
+
+    <details class="faq">
+      <summary>¿Cuánto cuesta entrar?</summary>
+      <p>La cuota es <b>transparente y en vivo</b>: los gastos fijos (salón, mobiliario, trofeos) se dividen entre todos los confirmados, más el costo de comida por persona. El número exacto lo ves arriba en <b>Cuota</b>, y baja conforme más gente confirma.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Puedo llevar acompañante?</summary>
+      <p>Sí. Solo indícalo al confirmar. Eso sí: <b>los acompañantes pagan cuota completa</b>, igual que todos. Aquí no hay mitades.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Qué pasa si no llevo disfraz?</summary>
+      <p>Pagas <b>$200 de penalización</b> que van directo al bote del mejor disfraz. O sea: tu flojera financia el premio de alguien que sí se esforzó. Tú decides.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Cómo pago mi cuota?</summary>
+      <p>Al confirmar te escribimos <b>por WhatsApp</b> con los datos. Por seguridad, los datos de pago <b>nunca</b> se publican en este sitio.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Cómo funcionan los premios?</summary>
+      <p>Son <b>6 trofeos esqueleto</b>. Cuatro se votan desde el celular durante la fiesta (mejor disfraz —que además gana el bote—, más creativo, más ridículo y más terrorífico) y dos son comodines que los anfitriones entregan en vivo.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Puedo poner música?</summary>
+      <p>Sí: la noche de la fiesta se activa el <b>Jam de Spotify</b> y encolas lo que quieras desde tu celular. El link aparecerá en la sección Jam.</p>
+    </details>
+    <details class="faq">
+      <summary>Confirmé y no puedo ir 😢</summary>
+      <p>Avísanos por WhatsApp lo antes posible: tu lugar afecta la cuota de los demás. Te vamos a extrañar (poquito).</p>
+    </details>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="logo-line">Puro Susto</div>
+  <p>Puro susto. Pura fiesta. — 31 · 10 · 2026 · Tijuana</p>
+  <p style="font-size: 13px;">Hecho con sangre (falsa) por los anfitriones. Dudas: por WhatsApp.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

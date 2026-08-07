@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PURO SUSTO — Recordatorios (anfitriones)</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .reco { margin-bottom: 20px; }
+    .reco pre {
+      white-space: pre-wrap; font-family: var(--font-ui); font-size: 16px;
+      background: var(--negro-abismo); border: 2px solid #26262c;
+      border-radius: var(--r-btn); padding: 18px; margin: 14px 0; color: var(--hueso);
+    }
+    .copiado { color: #9EF01A; font-weight: 700; margin-left: 12px; }
+  </style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Puro Susto</a>
+    <span class="caption">Recordatorios · solo anfitriones</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Mensajes para WhatsApp</h2>
+    <p class="niebla" style="margin-bottom: 14px;">Copia y pega en el grupo o por privado. <b style="color:var(--hueso)">Los datos de pago se mandan aparte, por privado — nunca en el sitio ni en mensajes masivos.</b> Reemplaza puro-susto.pages.dev por el dominio real.</p>
+    <p class="niebla" style="margin-bottom: 28px;"><b style="color:var(--hueso)">El link ES la invitación:</b> mándalo pelón (sin adjuntar imagen) y WhatsApp genera solo la tarjeta con el cartel, el título y el "¿te atreves?". El link lleva directo al botón de confirmar.</p>
+
+    <div class="card reco">
+      <h3>1 · Al confirmar (privado)</h3>
+      <pre id="r1">🎃 ¡Caíste, [NOMBRE]! Ya estás en la lista de PURO SUSTO.
+
+📅 Sábado 31 de octubre · 6 PM – 1 AM
+📍 Salón Castilla, Blvd. Viñas del Mar, Tijuana
+🧛 Disfraz OBLIGATORIO (sin disfraz son $200 al bote del premio)
+
+Tu cuota es transparente y en vivo: https://puro-susto.pages.dev
+Ahorita te paso los datos de pago por aquí. 🩸</pre>
+      <button class="btn btn-rojo" onclick="copiar('r1', this)">Copiar</button>
+    </div>
+
+    <div class="card reco">
+      <h3>2 · Una semana antes (grupo)</h3>
+      <pre id="r2">☠️ FALTA UNA SEMANA para PURO SUSTO ☠️
+
+📅 Sábado 31 de octubre · 6 PM
+📍 Salón Castilla, Blvd. Viñas del Mar
+
+✅ Checa la cuota en vivo y la lista de confirmados: https://puro-susto.pages.dev
+🧟 ¿Ya tienes disfraz? Recuerda: sin disfraz pagas $200 al bote.
+🏆 Hay 6 trofeos esqueleto en juego. Se vota por celular esa noche.
+
+Si aún no confirmas, hazlo ya — entre más seamos, más barata la cuota: https://puro-susto.pages.dev</pre>
+      <button class="btn btn-rojo" onclick="copiar('r2', this)">Copiar</button>
+    </div>
+
+    <div class="card reco">
+      <h3>3 · Un día antes (grupo)</h3>
+      <pre id="r3">🔪 MAÑANA ES PURO SUSTO 🔪
+
+📅 Sábado 31 · desde las 6 PM
+📍 Salón Castilla, Blvd. Viñas del Mar → mapa: https://puro-susto.pages.dev/#lugar
+
+Último repaso:
+🧛 Disfraz puesto DESDE LA ENTRADA (o son $200 al bote)
+📱 Trae tu cel cargado: ahí votas por los 6 trofeos
+🎶 El Jam de Spotify se abre en la fiesta para que pongas tu música
+📸 Todas las fotos van al álbum compartido
+
+Puro susto. Pura fiesta. 🩸</pre>
+      <button class="btn btn-rojo" onclick="copiar('r3', this)">Copiar</button>
+    </div>
+
+    <div class="card reco">
+      <h3>4 · Día de la fiesta (grupo)</h3>
+      <pre id="r4">🎃 ES HOY, ES HOY 🎃
+
+PURO SUSTO arranca a las 6 PM en el Salón Castilla (Blvd. Viñas del Mar).
+
+📱 Guarda este link: https://puro-susto.pages.dev
+Ahí está el mapa, el horario, el Jam para poner tu música y la VOTACIÓN de disfraces (se abre a las 10 PM).
+
+Nos vemos al rato… si te atreves. 🧛‍♂️</pre>
+      <button class="btn btn-rojo" onclick="copiar('r4', this)">Copiar</button>
+    </div>
+
+    <div class="card reco">
+      <h3>5 · Cobro pendiente (privado, tono amable)</h3>
+      <pre id="r5">¡Hola [NOMBRE]! 👻 Ya casi es PURO SUSTO y estamos cerrando cuentas.
+
+Tu cuota va en $[MONTO] (el desglose completo está en https://puro-susto.pages.dev/#cuota — todo transparente).
+
+Te mando los datos de pago por aquí. ¡Gracias! 🎃</pre>
+      <button class="btn btn-rojo" onclick="copiar('r5', this)">Copiar</button>
+    </div>
+  </div>
+</section>
+
+<script>
+function copiar(id, btn) {
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => {
+    let ok = btn.nextElementSibling;
+    if (!ok || !ok.classList.contains('copiado')) {
+      ok = document.createElement('span');
+      ok.className = 'copiado';
+      btn.after(ok);
+    }
+    ok.textContent = '¡Copiado!';
+    setTimeout(() => ok.remove(), 2000);
+  });
+}
+</script>
+</body>
+</html>
