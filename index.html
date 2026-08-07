@@ -140,14 +140,13 @@
         <input type="text" id="f-acomp-nombres" class="hidden" placeholder="Ej. Laura, Beto" maxlength="120">
 
         <label for="f-sindisfraz">¿Alguien de tu grupo irá sin disfraz? (+$200 c/u, directo al premio)</label>
+        <!-- app.js regenera estas opciones según el tamaño del grupo (tú + acompañantes) -->
         <select id="f-sindisfraz">
           <option value="0" selected>Nadie — todos disfrazados 🎃</option>
           <option value="1">1 sin disfraz (+$200)</option>
-          <option value="2">2 sin disfraz (+$400)</option>
-          <option value="3">3 sin disfraz (+$600)</option>
-          <option value="4">4 sin disfraz (+$800)</option>
-          <option value="5">5 sin disfraz (+$1,000)</option>
         </select>
+
+        <p class="niebla" style="font-size:14px; margin-top:10px;">La comida va incluida en la cuota. <b>Lo que tomes, lo traes tú</b> — trae lo que se te antoje.</p>
 
         <div class="mt-2">
           <button type="submit" class="btn btn-rojo" id="btn-rsvp">¡Voy!</button>

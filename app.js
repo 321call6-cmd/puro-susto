@@ -240,11 +240,31 @@ async function cargarDatos() {
 }
 
 /* ---------------- RSVP (solo index) ---------------- */
+
+/* El máximo de "sin disfraz" es el tamaño de tu grupo: tú + tus acompañantes.
+   Se regenera cada vez que cambias el número de acompañantes, para que nadie
+   pueda inflar el bote registrando más rebeldes de los que trae. */
+function sincronizarSinDisfraz() {
+  const sel = $('f-sindisfraz');
+  if (!sel) return;
+  const max = 1 + Number($('f-acomp')?.value || 0);
+  const previo = Number(sel.value || 0);
+  const opts = ['<option value="0">Nadie — todos disfrazados 🎃</option>'];
+  for (let i = 1; i <= max; i++) {
+    opts.push(`<option value="${i}">${i} sin disfraz (+${mxn(i * 200)})</option>`);
+  }
+  sel.innerHTML = opts.join('');
+  sel.value = String(Math.min(previo, max));
+}
+
 on('f-acomp', 'change', () => {
   const n = Number($('f-acomp').value);
   $('l-acomp-nombres')?.classList.toggle('hidden', !n);
   $('f-acomp-nombres')?.classList.toggle('hidden', !n);
+  sincronizarSinDisfraz();
 });
+
+sincronizarSinDisfraz();
 
 on('form-rsvp', 'submit', async (e) => {
   e.preventDefault();
@@ -287,6 +307,7 @@ on('form-rsvp', 'submit', async (e) => {
     $('form-rsvp').reset();
     $('l-acomp-nombres')?.classList.add('hidden');
     $('f-acomp-nombres')?.classList.add('hidden');
+    sincronizarSinDisfraz();
     cargarDatos();
   } else {
     msg.className = 'form-msg error';
