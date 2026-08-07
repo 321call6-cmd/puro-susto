@@ -49,13 +49,12 @@ function tickCountdown() {
   const ahora = new Date();
   let diff = FECHA_FIESTA - ahora;
   if (diff <= 0) {
-    if (ahora < FECHA_FIN) {
-      $('cd-d').parentElement.parentElement.innerHTML =
-        '<div class="count-cell" style="min-width:auto;padding:18px 28px;"><b>¡ES HOY!</b><span>La fiesta ya empezó 🎃</span></div>';
-    } else {
-      $('cd-d').parentElement.parentElement.innerHTML =
-        '<div class="count-cell" style="min-width:auto;padding:18px 28px;"><b>FIN</b><span>Nos vemos el próximo año</span></div>';
-    }
+    const cont = $('countdown');
+    cont.style.gridTemplateColumns = '1fr';
+    cont.innerHTML =
+      ahora < FECHA_FIN
+        ? '<div class="count-cell" style="padding:22px 28px;"><b>¡ES HOY!</b><span>La fiesta ya empezó 🎃</span></div>'
+        : '<div class="count-cell" style="padding:22px 28px;"><b>FIN</b><span>Nos vemos el próximo año</span></div>';
     clearInterval(cdTimer);
     return;
   }

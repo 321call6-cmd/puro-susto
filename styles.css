@@ -130,21 +130,27 @@ nav.links a:hover { color: var(--hueso); }
 }
 .hero .meta .niebla { display: block; font-size: 16px; margin-top: 4px; font-weight: 400; }
 
-/* Countdown */
+/* Countdown — barra única de 4 segmentos, nunca se rompe de fila */
 .countdown {
-  display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; justify-content: center;
-}
-.count-cell {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: min(480px, calc(100% - 8px));
+  margin-top: 36px;
   background: var(--carbon);
+  border: 2px solid #1f1f24;
   border-radius: var(--r-card);
-  padding: 18px 10px; min-width: 92px;
+  overflow: hidden;
 }
+.count-cell { padding: 20px 6px 16px; }
+.count-cell + .count-cell { border-left: 2px solid #1f1f24; }
 .count-cell b {
-  display: block; font-size: 40px; font-weight: 700; line-height: 1;
+  display: block;
+  font-size: clamp(32px, 9vw, 48px);
+  font-weight: 700; line-height: 1;
   color: var(--hueso); font-variant-numeric: tabular-nums;
 }
 .count-cell span {
-  display: block; margin-top: 6px; font-size: 13px; letter-spacing: 1.5px;
+  display: block; margin-top: 8px; font-size: 12px; letter-spacing: 2px;
   text-transform: uppercase; color: var(--niebla);
 }
 
