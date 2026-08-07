@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PURO SUSTO — Premios y votación</title>
+  <meta name="description" content="6 trofeos esqueleto. El mejor disfraz gana el premio en efectivo. Se vota desde tu celular el 31 de octubre.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PURO SUSTO — Premios y votación">
+  <meta property="og:description" content="6 trofeos esqueleto. El mejor disfraz gana el premio en efectivo. Se vota desde tu celular el 31 de octubre.">
+  <meta property="og:image" content="https://puro-susto.pages.dev/og-image.png">
+  <meta property="og:locale" content="es_MX">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+<!-- ==================== ICONOS (monstruos del brand) ==================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Calavera -->
+    <symbol id="i-calavera" viewBox="0 0 24 24">
+      <path d="M12 2C7 2 3.5 5.6 3.5 10.3c0 2.8 1.3 5 3.2 6.4v3c0 .7.6 1.3 1.3 1.3h1.2v-2a.8.8 0 0 1 1.6 0v2h2.4v-2a.8.8 0 0 1 1.6 0v2H16c.7 0 1.3-.6 1.3-1.3v-3c1.9-1.4 3.2-3.6 3.2-6.4C20.5 5.6 17 2 12 2zM8.6 12.6a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm6.8 0a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM12 13l1.2 2.2h-2.4L12 13z"/>
+    </symbol>
+    <!-- Fantasma -->
+    <symbol id="i-fantasma" viewBox="0 0 24 24">
+      <path d="M12 2C7.6 2 4.5 5.4 4.5 9.8V21c0 .8.9 1.2 1.5.7l1.6-1.4 1.7 1.5c.4.3.9.3 1.3 0L12 20.4l1.4 1.4c.4.3.9.3 1.3 0l1.7-1.5 1.6 1.4c.6.5 1.5.1 1.5-.7V9.8C19.5 5.4 16.4 2 12 2zM9.3 10.6a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8zm5.4 0a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8zM12 15.2c-.9 0-1.6-.9-1.6-1.9h3.2c0 1-.7 1.9-1.6 1.9z"/>
+    </symbol>
+    <!-- Murciélago -->
+    <symbol id="i-murcielago" viewBox="0 0 24 24">
+      <path d="M12 6.5c.5 0 1 .3 1.2.8l.4-1.5.9 1.6c3.2-2.6 7.3-1.5 8.5 1-1.7-.2-2.9.4-3.4 1.6-.1 1.4-1.1 2.3-2.6 2.3-.2 1-1 1.7-2 1.9l-.4 3.3-2.6-2-2.6 2-.4-3.3c-1-.2-1.8-.9-2-1.9-1.5 0-2.5-.9-2.6-2.3C3.9 8.8 2.7 8.2 1 8.4c1.2-2.5 5.3-3.6 8.5-1l.9-1.6.4 1.5c.2-.5.7-.8 1.2-.8z"/>
+    </symbol>
+    <!-- Calabaza -->
+    <symbol id="i-calabaza" viewBox="0 0 24 24">
+      <path d="M13.6 4.6c.6-1.1 1.6-1.9 3-2.1l.4 1.9c-.9.1-1.5.5-1.9 1.1 3.9.5 6.9 3.7 6.9 8.1 0 4.8-3.6 8.4-10 8.4S2 18.4 2 13.6C2 9 5.3 5.7 9.5 5.4c1.4-.1 2.9.1 4.1.8V4.6h0zM7.6 12.9l3-1.6-1.2 2.7-1.8-1.1zm8.8 0-1.8 1.1-1.2-2.7 3 1.6zm-8.2 4.2c2.5 1.4 5.1 1.4 7.6 0l-1.1 2.1h-1.5l-.7-1-.7 1h-1.5l-.7-1-.7 1-.7-2.1z"/>
+    </symbol>
+    <!-- Vampiro (colmillos) -->
+    <symbol id="i-vampiro" viewBox="0 0 24 24">
+      <path d="M2 7c2.6 2.4 6 3.7 10 3.7S19.4 9.4 22 7c-.5 3.2-2.4 5.6-5.2 6.8l-1.3 4.7-1.7-4.2c-.6.1-1.2.1-1.8.1s-1.2 0-1.8-.1l-1.7 4.2-1.3-4.7C4.4 12.6 2.5 10.2 2 7z"/>
+    </symbol>
+    <!-- Bruja (sombrero) -->
+    <symbol id="i-bruja" viewBox="0 0 24 24">
+      <path d="M14.5 3.5 8 10.5l-1.5 6h11L14.5 3.5zM3 18h18c.6 0 1 .4 1 1s-.4 1-1 1H3c-.6 0-1-.4-1-1s.4-1 1-1z"/>
+    </symbol>
+    <!-- Frankenstein -->
+    <symbol id="i-franky" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M5 3h14v4h2v2.4h-2v6.1A4.5 4.5 0 0 1 14.5 20h-5A4.5 4.5 0 0 1 5 15.5V9.4H3V7h2V3zm2.2 2v2h1.9V5H7.2zm3.9 0v2h1.8V5h-1.8zm3.7 0v2h1.9V5h-1.9zM8.3 13a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zm7.4 0a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zM9 15.4h6V17H9v-1.6z"/>
+    </symbol>
+    <!-- Casa embrujada -->
+    <symbol id="i-casa" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M2 21v-7.5h2.5V9.8L8 6.5l3.5 3.3v1.7h1V5.8L16 3l3.5 2.8v7.7H22V21H2zm8.3 0h3.4v-3.2a1.7 1.7 0 0 0-3.4 0V21zM7 13.8a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zm9.5-4a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/>
+    </symbol>
+    <!-- Candado (votación dormida) -->
+    <symbol id="i-candado" viewBox="0 0 24 24">
+      <path d="M12 2a5 5 0 0 0-5 5v3H6c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2h-1V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 7a1.8 1.8 0 0 1 1 3.3V19a1 1 0 0 1-2 0v-1.7a1.8 1.8 0 0 1 1-3.3z"/>
+    </symbol>
+  </defs>
+</svg>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Puro Susto</a>
+    <nav class="links">
+      <a href="index.html#asistencia">Confirmar</a>
+      <a href="index.html#cuota">Cuota</a>
+      <a href="la-noche.html">La noche</a>
+      <a href="premios.html">Premios</a>
+      <a href="index.html#lugar">Lugar</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero-mini">
+  <h2 style="font-size: clamp(44px, 8vw, 72px);">Premios</h2>
+  <span class="caption">6 trofeos esqueleto · se vota desde tu celular</span>
+</section>
+
+<section id="votacion" style="padding-top: 30px;">
+  <div class="wrap">
+    <div class="grid-2" style="margin-bottom: 20px;">
+      <div class="card card-destacada">
+        <h3>Se vota aquí, el 31</h3>
+        <p><b>Mejor disfraz</b> — trofeo + <b>el premio en efectivo completo</b> 💰<br>
+        <b>Más creativo</b> · <b>Más ridículo</b> · <b>Más terrorífico</b> — trofeo y gloria eterna.</p>
+        <p class="mt-2 niebla">1 voto por persona por categoría. El sistema no perdona tramposos.</p>
+      </div>
+      <div class="card">
+        <h3>Los comodines</h3>
+        <p>Los otros <b>2 trofeos</b> los deciden los anfitriones en vivo, por puro capricho y justicia poética. Nadie está a salvo.</p>
+        <p class="mt-2 niebla">El monto del premio crece con cada confirmado y cada rebelde sin disfraz — míralo en vivo en la <a href="index.html#confirmados">página principal</a>.</p>
+      </div>
+    </div>
+
+    <div class="card votacion-dormida" id="votacion-dormida">
+      <svg><use href="#i-candado"/></svg>
+      <h3>La votación está sellada</h3>
+      <p class="niebla">Se abre el 31 de octubre durante la fiesta. Vuelve aquí desde tu celular cuando los anfitriones den la señal.</p>
+    </div>
+
+    <div class="hidden" id="votacion-activa">
+      <div class="card">
+        <label for="v-votante">¿Quién vota? (tu nombre, como confirmaste)</label>
+        <input type="text" id="v-votante" placeholder="Tu nombre" maxlength="60">
+        <div id="categorias-voto" class="mt-2"></div>
+        <div class="mt-2"><button class="btn btn-rojo" id="btn-votar">Enviar mis votos</button></div>
+        <div class="form-msg" id="voto-msg" role="status"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="logo-line">Puro Susto</div>
+  <p>Puro susto. Pura fiesta. — 31 · 10 · 2026 · Tijuana</p>
+  <p style="font-size: 13px;"><a href="la-noche.html">La noche</a> · <a href="premios.html">Premios y votación</a> · Dudas: por WhatsApp.</p>
+</footer>
+
+<script src="app.js?v=4"></script>
+</body>
+</html>

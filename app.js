@@ -1,26 +1,19 @@
 /* ============================================================
    PURO SUSTO — Halloween 2026 · app.js
+   Corre en las 3 páginas (index, la-noche, premios): cada
+   bloque se activa solo si sus elementos existen en la página.
    ============================================================ */
 
-/* ------------------------------------------------------------
-   CONFIGURACIÓN — lo único que hay que editar a mano.
-   Pega aquí el URL /exec del Apps Script cuando esté desplegado
-   (Implementar → Nueva implementación → App web →
-    Ejecutar como: Yo · Acceso: Cualquier persona).
-   ------------------------------------------------------------ */
+/* ---------------- CONFIGURACIÓN ---------------- */
 const API_URL = 'https://script.google.com/macros/s/AKfycbwyaHDTp_BWN_48Pk7bFielSHAAa3QLQ1nwT5T9lZuwkPMQD-zVzx-iF4N5Jy_L24GfYw/exec';
 
-/* WhatsApp de los anfitriones para sugerir juegos / dudas.
-   Solo dígitos con lada internacional, ej. '526641234567' */
+/* WhatsApp de los anfitriones (solo dígitos con lada, ej. '526641234567') */
 const WHATSAPP_ANFITRIONES = '';
 
-/* Estos dos pueden venir de la pestaña Config (keys jam_url / album_url);
-   si se llenan aquí, ganan las constantes. */
+/* Si se llenan aquí, ganan sobre la pestaña Config (jam_url / album_url) */
 const JAM_URL_MANUAL = '';
 const ALBUM_URL_MANUAL = '';
 
-/* Fallback de gastos por si la API aún no responde (mismos datos
-   que la pestaña Gastos al día de hoy). */
 const FALLBACK_GASTOS = [
   { concepto: 'Palapa / salón', tipo: 'FIJO', monto: 500 },
   { concepto: 'Sillas y mesas', tipo: 'FIJO', monto: 1000 },
@@ -32,66 +25,61 @@ const FECHA_FIESTA = new Date('2026-10-31T18:00:00-07:00');
 const FECHA_FIN = new Date('2026-11-01T01:00:00-07:00');
 
 const CATEGORIAS_VOTO = [
-  { id: 'mejor', nombre: 'Mejor disfraz 💰 (gana el bote)' },
+  { id: 'mejor', nombre: 'Mejor disfraz 💰 (gana el premio)' },
   { id: 'creativo', nombre: 'Más creativo' },
   { id: 'ridiculo', nombre: 'Más ridículo' },
   { id: 'terrorifico', nombre: 'Más terrorífico' },
 ];
 
-/* ------------------------------------------------------------ */
+/* ---------------- Helpers ---------------- */
 const $ = (id) => document.getElementById(id);
+const on = (id, ev, fn) => { const el = $(id); if (el) el.addEventListener(ev, fn); };
+const setText = (id, txt) => { const el = $(id); if (el) el.textContent = txt; };
 const mxn = (n) => '$' + Math.ceil(n).toLocaleString('es-MX');
+
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
 
 let confirmadosCache = [];
 
-/* ---------- Countdown ---------- */
-function tickCountdown() {
-  const ahora = new Date();
-  let diff = FECHA_FIESTA - ahora;
-  if (diff <= 0) {
-    const cont = $('countdown');
-    cont.style.gridTemplateColumns = '1fr';
-    cont.innerHTML =
-      ahora < FECHA_FIN
-        ? '<div class="count-cell" style="padding:22px 28px;"><b>¡ES HOY!</b><span>La fiesta ya empezó 🎃</span></div>'
-        : '<div class="count-cell" style="padding:22px 28px;"><b>FIN</b><span>Nos vemos el próximo año</span></div>';
-    clearInterval(cdTimer);
-    return;
-  }
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor(diff / 3600000) % 24;
-  const m = Math.floor(diff / 60000) % 60;
-  const s = Math.floor(diff / 1000) % 60;
-  $('cd-d').textContent = d;
-  $('cd-h').textContent = String(h).padStart(2, '0');
-  $('cd-m').textContent = String(m).padStart(2, '0');
-  $('cd-s').textContent = String(s).padStart(2, '0');
+/* ---------------- Countdown (solo index) ---------------- */
+if ($('cd-d')) {
+  const tick = () => {
+    const ahora = new Date();
+    const diff = FECHA_FIESTA - ahora;
+    if (diff <= 0) {
+      const cont = $('countdown');
+      cont.style.gridTemplateColumns = '1fr';
+      cont.innerHTML =
+        ahora < FECHA_FIN
+          ? '<div class="count-cell" style="padding:22px 28px;"><b>¡ES HOY!</b><span>La fiesta ya empezó 🎃</span></div>'
+          : '<div class="count-cell" style="padding:22px 28px;"><b>FIN</b><span>Nos vemos el próximo año</span></div>';
+      clearInterval(timer);
+      return;
+    }
+    setText('cd-d', Math.floor(diff / 86400000));
+    setText('cd-h', String(Math.floor(diff / 3600000) % 24).padStart(2, '0'));
+    setText('cd-m', String(Math.floor(diff / 60000) % 60).padStart(2, '0'));
+    setText('cd-s', String(Math.floor(diff / 1000) % 60).padStart(2, '0'));
+  };
+  const timer = setInterval(tick, 1000);
+  tick();
 }
-const cdTimer = setInterval(tickCountdown, 1000);
-tickCountdown();
 
-/* ---------- Agregar a calendario (.ics + Google Calendar) ---------- */
-$('btn-calendario').addEventListener('click', (e) => {
+/* ---------------- Agendar (.ics) ---------------- */
+on('btn-calendario', 'click', (e) => {
   e.preventDefault();
   const ics = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//PURO SUSTO//Halloween 2026//ES',
-    'BEGIN:VEVENT',
-    'UID:puro-susto-2026@puro-susto',
-    'DTSTAMP:20260806T000000Z',
-    'DTSTART:20261101T010000Z',
-    'DTEND:20261101T080000Z',
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PURO SUSTO//Halloween 2026//ES',
+    'BEGIN:VEVENT', 'UID:puro-susto-2026@puro-susto', 'DTSTAMP:20260806T000000Z',
+    'DTSTART:20261101T010000Z', 'DTEND:20261101T080000Z',
     'SUMMARY:PURO SUSTO 🎃 Fiesta de Halloween',
-    'DESCRIPTION:Puro susto. Pura fiesta. Disfraz obligatorio (sin disfraz\\, $200 al bote). Detalles y confirmación en el sitio.',
+    'DESCRIPTION:Puro susto. Pura fiesta. Disfraz obligatorio (sin disfraz\\, $200 al premio). Detalles y confirmación en el sitio.',
     'LOCATION:Salón Castilla\\, Blvd. Viñas del Mar\\, Tijuana',
-    'BEGIN:VALARM',
-    'TRIGGER:-P1D',
-    'ACTION:DISPLAY',
-    'DESCRIPTION:Mañana es PURO SUSTO — ¿ya tienes disfraz?',
-    'END:VALARM',
-    'END:VEVENT',
-    'END:VCALENDAR',
+    'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY',
+    'DESCRIPTION:Mañana es PURO SUSTO — ¿ya tienes disfraz?', 'END:VALARM',
+    'END:VEVENT', 'END:VCALENDAR',
   ].join('\r\n');
   const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
   const a = document.createElement('a');
@@ -101,11 +89,10 @@ $('btn-calendario').addEventListener('click', (e) => {
   URL.revokeObjectURL(a.href);
 });
 
-/* ---------- Pasar la invitación ----------
-   La invitación oficial ES la tarjeta que genera este link al
-   compartirse (og-image + título + descripción). Aquí solo
-   pasamos el link pelón: WhatsApp arma la tarjeta solo. */
-$('btn-compartir').addEventListener('click', async (e) => {
+/* ---------------- Pasar la invitación ----------------
+   El link ES la invitación: WhatsApp genera la tarjeta con el
+   og-image al compartirlo pelón. */
+on('btn-compartir', 'click', async (e) => {
   e.preventDefault();
   const url = location.origin + '/';
   const texto = '🎃 Estás invitado a PURO SUSTO — 31 de octubre, Tijuana. Confirma aquí… si te atreves:';
@@ -116,7 +103,21 @@ $('btn-compartir').addEventListener('click', async (e) => {
   }
 });
 
-/* ---------- Helpers de API ---------- */
+/* ---------------- WhatsApp: juegos y dudas ---------------- */
+(function initWhats() {
+  const juego = $('btn-sugerir-juego');
+  if (juego) {
+    const t = encodeURIComponent('🎃 PURO SUSTO — propongo un juego para la noche: ');
+    juego.href = WHATSAPP_ANFITRIONES ? `https://wa.me/${WHATSAPP_ANFITRIONES}?text=${t}` : `https://wa.me/?text=${t}`;
+  }
+  const dudas = $('btn-dudas');
+  if (dudas) {
+    const t = encodeURIComponent('🎃 Hola, tengo una duda sobre PURO SUSTO: ');
+    dudas.href = WHATSAPP_ANFITRIONES ? `https://wa.me/${WHATSAPP_ANFITRIONES}?text=${t}` : `https://wa.me/?text=${t}`;
+  }
+})();
+
+/* ---------------- API ---------------- */
 async function apiGet(action) {
   if (!API_URL) return null;
   try {
@@ -132,7 +133,6 @@ async function apiGet(action) {
 async function apiPost(payload) {
   if (!API_URL) return null;
   try {
-    // text/plain evita el preflight CORS con Apps Script
     const r = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -146,7 +146,7 @@ async function apiPost(payload) {
   }
 }
 
-/* ---------- Gastos + cuota ---------- */
+/* ---------------- Datos en vivo ---------------- */
 function pintarGastos(gastos, personas) {
   const tbody = $('tabla-gastos');
   const fijos = gastos.filter((g) => String(g.tipo).toUpperCase().startsWith('FIJO'));
@@ -154,118 +154,99 @@ function pintarGastos(gastos, personas) {
   const totalFijo = fijos.reduce((s, g) => s + Number(g.monto || 0), 0);
   const totalPP = porPersona.reduce((s, g) => s + Number(g.monto || 0), 0);
 
-  tbody.innerHTML =
-    gastos
-      .map(
-        (g) => `<tr>
+  if (tbody) {
+    tbody.innerHTML =
+      gastos.map((g) => `<tr>
           <td>${escapeHtml(g.concepto)}</td>
           <td class="niebla">${String(g.tipo).toUpperCase().startsWith('FIJO') ? 'Fijo · se divide' : 'Por persona'}</td>
           <td class="num">${mxn(g.monto)}${String(g.tipo).toUpperCase().startsWith('FIJO') ? '' : ' c/u'}</td>
-        </tr>`
-      )
-      .join('') +
-    `<tr class="total"><td>Total fijo</td><td></td><td class="num">${mxn(totalFijo)}</td></tr>`;
+        </tr>`).join('') +
+      `<tr class="total"><td>Total fijo</td><td></td><td class="num">${mxn(totalFijo)}</td></tr>`;
+  }
 
-  const formula = personas
-    ? `${mxn(totalFijo)} ÷ ${personas} personas + ${mxn(totalPP)} = ${mxn(totalFijo / personas + totalPP)} por persona`
-    : `${mxn(totalFijo)} ÷ confirmados + ${mxn(totalPP)} por persona`;
-  $('cuota-formula').textContent = formula;
-
+  const formula = $('cuota-formula');
+  if (formula) {
+    formula.textContent = personas
+      ? `${mxn(totalFijo)} ÷ ${personas} personas + ${mxn(totalPP)} = ${mxn(totalFijo / personas + totalPP)} por persona`
+      : `${mxn(totalFijo)} ÷ confirmados + ${mxn(totalPP)} por persona`;
+  }
   return { totalFijo, totalPP };
 }
 
-function escapeHtml(s) {
-  return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-}
-
-/* ---------- Confirmados ---------- */
 function pintarConfirmados(lista) {
   const cont = $('lista-confirmados');
-  if (!lista || !lista.length) {
-    cont.innerHTML = '<span class="chip niebla">Aún no cae nadie… sé el primero 🩸</span>';
-    return 0;
+  const total = (lista || []).reduce((s, c) => s + 1 + Number(c.acompanantes || 0), 0);
+  if (cont) {
+    cont.innerHTML = lista && lista.length
+      ? lista.map((c) => {
+          const n = Number(c.acompanantes || 0);
+          return `<span class="chip">${escapeHtml(c.nombre || c)}${n ? ` <span class="mas">+${n}</span>` : ''}</span>`;
+        }).join('')
+      : '<span class="chip niebla">Aún no cae nadie… sé el primero 🩸</span>';
   }
-  cont.innerHTML = lista
-    .map((c) => {
-      const n = Number(c.acompanantes || c.acompañantes || 0);
-      return `<span class="chip">${escapeHtml(c.nombre || c)}${n ? ` <span class="mas">+${n}</span>` : ''}</span>`;
-    })
-    .join('');
-  return lista.reduce((s, c) => s + 1 + Number(c.acompanantes || c.acompañantes || 0), 0);
+  return total;
 }
 
-/* ---------- Carga principal de datos ---------- */
 async function cargarDatos() {
+  // Solo pide lo que la página actual necesita
+  const necesitaStats = !!($('stat-personas') || $('tabla-gastos'));
+  const necesitaConfig = !!($('btn-jam') || $('btn-album') || $('votacion-dormida'));
+  const necesitaConfirmados = necesitaStats || !!$('votacion-dormida');
+
   const [config, gastos, confirmados, cuota, bote] = await Promise.all([
-    apiGet('config'),
-    apiGet('gastos'),
-    apiGet('confirmados'),
-    apiGet('cuota'),
-    apiGet('bote'),
+    necesitaConfig ? apiGet('config') : null,
+    necesitaStats ? apiGet('gastos') : null,
+    necesitaConfirmados ? apiGet('confirmados') : null,
+    necesitaStats ? apiGet('cuota') : null,
+    necesitaStats ? apiGet('bote') : null,
   ]);
 
-  // Confirmados
-  const lista = Array.isArray(confirmados) ? confirmados : confirmados?.confirmados || [];
-  confirmadosCache = lista;
-  const personas = pintarConfirmados(lista);
-  $('stat-personas').textContent = personas || '0';
-  if (lista.length) {
-    $('ultima-actualizacion').textContent = `Lista pública · actualizada al abrir la página`;
-  } else if (!API_URL) {
-    $('ultima-actualizacion').textContent = 'La lista en vivo se conecta muy pronto';
+  if (necesitaConfirmados) {
+    const lista = Array.isArray(confirmados) ? confirmados : confirmados?.confirmados || [];
+    confirmadosCache = lista;
+    const personas = pintarConfirmados(lista);
+    setText('stat-personas', personas || '0');
+    if (!API_URL) setText('ultima-actualizacion', 'La lista en vivo se conecta muy pronto');
+
+    if (necesitaStats) {
+      const listaGastos = Array.isArray(gastos) ? gastos : gastos?.gastos || [];
+      const { totalFijo, totalPP } = pintarGastos(listaGastos.length ? listaGastos : FALLBACK_GASTOS, personas);
+      const cuotaApi = Number(cuota?.cuota || 0);
+      const cuotaCalc = personas ? totalFijo / personas + totalPP : 0;
+      setText('stat-cuota', cuotaApi ? mxn(cuotaApi) : personas ? mxn(cuotaCalc) : '—');
+      const boteVal = Number(bote?.bote || 0);
+      setText('stat-bote', boteVal ? mxn(boteVal) : '$0');
+    }
   }
 
-  // Gastos
-  const listaGastos = Array.isArray(gastos) ? gastos : gastos?.gastos || FALLBACK_GASTOS;
-  const { totalFijo, totalPP } = pintarGastos(listaGastos.length ? listaGastos : FALLBACK_GASTOS, personas);
-
-  // Cuota: la API manda; si no, se calcula aquí
-  const cuotaApi = Number(cuota?.cuota || cuota?.monto || 0);
-  const cuotaCalc = personas ? totalFijo / personas + totalPP : 0;
-  $('stat-cuota').textContent = cuotaApi ? mxn(cuotaApi) : personas ? mxn(cuotaCalc) : '—';
-
-  // Bote del disfraz
-  const boteVal = Number(bote?.bote || bote?.monto || 0);
-  $('stat-bote').textContent = boteVal ? mxn(boteVal) : '$0';
-
-  // Config: links y votación
   const cfg = config || {};
-  const jamUrl = JAM_URL_MANUAL || cfg.jam_url || cfg.jamUrl || '';
-  if (jamUrl) {
+  const jamUrl = JAM_URL_MANUAL || cfg.jam_url || '';
+  if (jamUrl && $('btn-jam')) {
     $('btn-jam').href = jamUrl;
     $('btn-jam').classList.remove('hidden');
-    $('jam-dormido').classList.add('hidden');
+    $('jam-dormido')?.classList.add('hidden');
   }
-  const albumUrl = ALBUM_URL_MANUAL || cfg.album_url || cfg.albumUrl || '';
-  if (albumUrl) {
+  const albumUrl = ALBUM_URL_MANUAL || cfg.album_url || '';
+  if (albumUrl && $('btn-album')) {
     $('btn-album').href = albumUrl;
     $('btn-album').classList.remove('hidden');
-    $('album-dormido').classList.add('hidden');
+    $('album-dormido')?.classList.add('hidden');
   }
 
   const votacionOn = ['on', 'true', 'si', 'sí', '1', 'abierta'].includes(
-    String(cfg.votacion ?? cfg.votacion_activa ?? '').toLowerCase()
+    String(cfg.votacion ?? '').toLowerCase()
   );
-  if (votacionOn) despertarVotacion();
+  if (votacionOn && $('votacion-dormida')) despertarVotacion();
 }
 
-/* ---------- WhatsApp: sugerir juego ---------- */
-(function initWhats() {
-  const btn = $('btn-sugerir-juego');
-  const texto = encodeURIComponent('🎃 PURO SUSTO — propongo un juego para la noche: ');
-  btn.href = WHATSAPP_ANFITRIONES
-    ? `https://wa.me/${WHATSAPP_ANFITRIONES}?text=${texto}`
-    : `https://wa.me/?text=${texto}`;
-})();
-
-/* ---------- RSVP ---------- */
-$('f-acomp').addEventListener('change', () => {
+/* ---------------- RSVP (solo index) ---------------- */
+on('f-acomp', 'change', () => {
   const n = Number($('f-acomp').value);
-  $('l-acomp-nombres').classList.toggle('hidden', !n);
-  $('f-acomp-nombres').classList.toggle('hidden', !n);
+  $('l-acomp-nombres')?.classList.toggle('hidden', !n);
+  $('f-acomp-nombres')?.classList.toggle('hidden', !n);
 });
 
-$('form-rsvp').addEventListener('submit', async (e) => {
+on('form-rsvp', 'submit', async (e) => {
   e.preventDefault();
   const msg = $('rsvp-msg');
   const btn = $('btn-rsvp');
@@ -285,6 +266,7 @@ $('form-rsvp').addEventListener('submit', async (e) => {
     whatsapp: $('f-whats').value.trim(),
     acompanantes: Number($('f-acomp').value),
     acompanantes_nombres: $('f-acomp-nombres').value.trim(),
+    sin_disfraz: Number($('f-sindisfraz').value),
   };
   const res = await apiPost(payload);
   btn.disabled = false;
@@ -296,20 +278,23 @@ $('form-rsvp').addEventListener('submit', async (e) => {
     return;
   }
   if (res.status === 'duplicado' || res.duplicado) {
-    msg.innerHTML = `Ya estabas en la lista, ${escapeHtml(payload.nombre)} — tranquilo, el susto no se duplica. <span class="badge-vas">¡Vas!</span>`;
+    msg.innerHTML = `Ya estabas en la lista, ${escapeHtml(payload.nombre)} — el susto no se duplica. <span class="badge-vas">¡Vas!</span>`;
   } else if (res.ok || res.status === 'nuevo') {
-    msg.innerHTML = `Listo, ${escapeHtml(payload.nombre)}. Te escribimos por WhatsApp para el pago. <span class="badge-vas">¡Vas!</span><br><span class="niebla" style="font-size:15px;">¿Falta alguien? Pásale la invitación con el botón de arriba.</span>`;
+    const notaDisfraz = payload.sin_disfraz
+      ? `<br><span class="niebla" style="font-size:15px;">Anotamos ${payload.sin_disfraz} sin disfraz: +${'$' + (payload.sin_disfraz * 200).toLocaleString('es-MX')} al premio. 😈</span>`
+      : '';
+    msg.innerHTML = `Listo, ${escapeHtml(payload.nombre)}. Te escribimos por WhatsApp para el pago. <span class="badge-vas">¡Vas!</span>${notaDisfraz}`;
     $('form-rsvp').reset();
-    $('l-acomp-nombres').classList.add('hidden');
-    $('f-acomp-nombres').classList.add('hidden');
-    cargarDatos(); // refresca lista y cuota en vivo
+    $('l-acomp-nombres')?.classList.add('hidden');
+    $('f-acomp-nombres')?.classList.add('hidden');
+    cargarDatos();
   } else {
     msg.className = 'form-msg error';
     msg.textContent = res.error || 'No se pudo confirmar. Intenta de nuevo.';
   }
 });
 
-/* ---------- Votación ---------- */
+/* ---------------- Votación (solo premios) ---------------- */
 function despertarVotacion() {
   $('votacion-dormida').classList.add('hidden');
   $('votacion-activa').classList.remove('hidden');
@@ -337,7 +322,7 @@ function despertarVotacion() {
   });
 }
 
-$('btn-votar').addEventListener('click', async () => {
+on('btn-votar', 'click', async () => {
   const msg = $('voto-msg');
   msg.className = 'form-msg';
   const votante = $('v-votante').value.trim();
@@ -368,5 +353,5 @@ $('btn-votar').addEventListener('click', async () => {
     : 'No se registraron votos (¿ya habías votado?).';
 });
 
-/* ---------- Arranque ---------- */
+/* ---------------- Arranque ---------------- */
 cargarDatos();

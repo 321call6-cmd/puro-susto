@@ -94,6 +94,27 @@ section > .wrap { position: relative; z-index: 1; }
   transform: rotate(8deg) scaleX(-1);
 }
 
+/* Mini-hero de páginas secundarias */
+.hero-mini {
+  text-align: center;
+  padding: 100px 22px 30px;
+  background: radial-gradient(ellipse 80% 70% at 50% -20%, rgba(120, 0, 0, 0.3), transparent 70%), var(--negro-abismo);
+}
+.hero-mini .caption { display: block; margin-top: 8px; }
+
+/* Tarjetas-link a otras páginas */
+a.card-link {
+  display: flex; gap: 18px; align-items: flex-start;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease;
+}
+a.card-link:hover { border-color: var(--rojo-sangre); }
+a.card-link svg { width: 40px; height: 40px; fill: var(--rojo-sangre); flex: 0 0 auto; margin-top: 4px; }
+a.card-link p { margin-top: 4px; }
+
+footer a { color: var(--niebla); }
+
 .section-head { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
 .section-head svg { width: 44px; height: 44px; flex: 0 0 auto; fill: var(--hueso); }
 .section-head .kicker { display: block; }
