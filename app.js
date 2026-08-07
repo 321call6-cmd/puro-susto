@@ -173,18 +173,39 @@ function pintarGastos(gastos, personas) {
   return { totalFijo, totalPP };
 }
 
+/* Aplana la lista en PERSONAS: quien confirmó + cada acompañante con nombre.
+   Los acompañantes sin nombre capturado quedan como "Invitado de X" para que
+   igual se puedan votar el 31. */
+function todasLasPersonas(lista) {
+  const out = [];
+  (lista || []).forEach((c) => {
+    const anfitrion = c.nombre || String(c);
+    out.push({ nombre: anfitrion, invitadoPor: null });
+
+    const nombres = (c.acompanantes_nombres || []).filter(Boolean);
+    nombres.forEach((n) => out.push({ nombre: n, invitadoPor: anfitrion }));
+
+    const faltan = Number(c.acompanantes || 0) - nombres.length;
+    for (let i = 1; i <= faltan; i++) {
+      out.push({ nombre: `Invitado de ${anfitrion}`, invitadoPor: anfitrion });
+    }
+  });
+  return out;
+}
+
 function pintarConfirmados(lista) {
   const cont = $('lista-confirmados');
-  const total = (lista || []).reduce((s, c) => s + 1 + Number(c.acompanantes || 0), 0);
+  const personas = todasLasPersonas(lista);
   if (cont) {
-    cont.innerHTML = lista && lista.length
-      ? lista.map((c) => {
-          const n = Number(c.acompanantes || 0);
-          return `<span class="chip">${escapeHtml(c.nombre || c)}${n ? ` <span class="mas">+${n}</span>` : ''}</span>`;
-        }).join('')
+    cont.innerHTML = personas.length
+      ? personas.map((p) =>
+          p.invitadoPor
+            ? `<span class="chip niebla" title="Invitado por ${escapeHtml(p.invitadoPor)}">${escapeHtml(p.nombre)}</span>`
+            : `<span class="chip">${escapeHtml(p.nombre)}</span>`
+        ).join('')
       : '<span class="chip niebla">Aún no cae nadie… sé el primero 🩸</span>';
   }
-  return total;
+  return personas.length;
 }
 
 async function cargarDatos() {
@@ -257,13 +278,37 @@ function sincronizarSinDisfraz() {
   sel.value = String(Math.min(previo, max));
 }
 
+/* Un campo por acompañante: sin comas ambiguas y sin adivinar cuántos nombres
+   faltan. Conserva lo que ya escribiste si cambias el número. */
+function sincronizarNombresAcomp() {
+  const box = $('acomp-nombres-box');
+  if (!box) return;
+  const n = Number($('f-acomp')?.value || 0);
+  const previos = leerNombresAcomp();
+
+  box.classList.toggle('hidden', !n);
+  if (!n) { box.innerHTML = ''; return; }
+
+  let html = '';
+  for (let i = 1; i <= n; i++) {
+    html +=
+      `<label for="f-acomp-${i}">Nombre del acompañante ${i}</label>` +
+      `<input type="text" id="f-acomp-${i}" class="acomp-nombre" maxlength="60"` +
+      ` placeholder="Nombre y apellido" required value="${escapeHtml(previos[i - 1] || '')}">`;
+  }
+  box.innerHTML = html;
+}
+
+function leerNombresAcomp() {
+  return Array.from(document.querySelectorAll('.acomp-nombre')).map((i) => i.value.trim());
+}
+
 on('f-acomp', 'change', () => {
-  const n = Number($('f-acomp').value);
-  $('l-acomp-nombres')?.classList.toggle('hidden', !n);
-  $('f-acomp-nombres')?.classList.toggle('hidden', !n);
+  sincronizarNombresAcomp();
   sincronizarSinDisfraz();
 });
 
+sincronizarNombresAcomp();
 sincronizarSinDisfraz();
 
 on('form-rsvp', 'submit', async (e) => {
@@ -285,7 +330,7 @@ on('form-rsvp', 'submit', async (e) => {
     nombre: $('f-nombre').value.trim(),
     whatsapp: $('f-whats').value.trim(),
     acompanantes: Number($('f-acomp').value),
-    acompanantes_nombres: $('f-acomp-nombres').value.trim(),
+    acompanantes_nombres: leerNombresAcomp().filter(Boolean).join(', '),
     sin_disfraz: Number($('f-sindisfraz').value),
   };
   const res = await apiPost(payload);
@@ -303,10 +348,10 @@ on('form-rsvp', 'submit', async (e) => {
     const notaDisfraz = payload.sin_disfraz
       ? `<br><span class="niebla" style="font-size:15px;">Anotamos ${payload.sin_disfraz} sin disfraz: +${'$' + (payload.sin_disfraz * 200).toLocaleString('es-MX')} al premio. 😈</span>`
       : '';
-    msg.innerHTML = `Listo, ${escapeHtml(payload.nombre)}. Te escribimos por WhatsApp para el pago. <span class="badge-vas">¡Vas!</span>${notaDisfraz}`;
+    const notaError = '<br><span class="niebla" style="font-size:15px;">¿Te equivocaste en algo? Escríbenos por WhatsApp y lo corregimos.</span>';
+    msg.innerHTML = `Listo, ${escapeHtml(payload.nombre)}. Te escribimos por WhatsApp para el pago. <span class="badge-vas">¡Vas!</span>${notaDisfraz}${notaError}`;
     $('form-rsvp').reset();
-    $('l-acomp-nombres')?.classList.add('hidden');
-    $('f-acomp-nombres')?.classList.add('hidden');
+    sincronizarNombresAcomp();
     sincronizarSinDisfraz();
     cargarDatos();
   } else {
@@ -321,13 +366,17 @@ function despertarVotacion() {
   $('votacion-activa').classList.remove('hidden');
 
   const cont = $('categorias-voto');
+  // Candidatos = TODAS las personas, no solo quien llenó el formulario.
+  // Los acompañantes también se disfrazan y también compiten.
+  const candidatos = todasLasPersonas(confirmadosCache);
+
   cont.innerHTML = CATEGORIAS_VOTO.map(
     (cat) => `
     <div class="categoria-voto" data-cat="${cat.id}">
       <h3 style="font-size:20px;">${cat.nombre}</h3>
       <div class="candidatos">
-        ${confirmadosCache
-          .map((c) => `<button type="button" class="candidato" data-nombre="${escapeHtml(c.nombre || c)}">${escapeHtml(c.nombre || c)}</button>`)
+        ${candidatos
+          .map((p) => `<button type="button" class="candidato" data-nombre="${escapeHtml(p.nombre)}">${escapeHtml(p.nombre)}</button>`)
           .join('') || '<span class="niebla">Sin confirmados para votar</span>'}
       </div>
     </div>`
