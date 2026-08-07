@@ -78,7 +78,21 @@ a { color: var(--hueso); }
 /* ---------- Layout ---------- */
 .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
 
-section { padding: 76px 0; }
+section { padding: 76px 0; position: relative; overflow: hidden; }
+section > .wrap { position: relative; z-index: 1; }
+
+/* Monstruos de fondo — decoración, nunca estorban (brand 5.1) */
+.monster-bg {
+  position: absolute; z-index: 0; pointer-events: none;
+  width: clamp(280px, 38vw, 460px); height: auto;
+  fill: var(--rojo-sangre); opacity: 0.07;
+  bottom: -60px; right: -70px;
+  transform: rotate(-10deg);
+}
+.monster-bg.left {
+  right: auto; left: -70px;
+  transform: rotate(8deg) scaleX(-1);
+}
 
 .section-head { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
 .section-head svg { width: 44px; height: 44px; flex: 0 0 auto; fill: var(--hueso); }
@@ -251,6 +265,25 @@ table.gastos th {
 table.gastos td { padding: 12px 8px; border-bottom: 1px solid #1d1d22; font-size: 17px; }
 table.gastos td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
 table.gastos tr.total td { border-bottom: none; font-weight: 700; font-size: 18px; }
+
+/* ---------- Galería de monstruos (duotono penumbra) ---------- */
+.galeria-monstruos {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+@media (max-width: 720px) { .galeria-monstruos { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+.galeria-monstruos figure {
+  margin: 0; background: var(--carbon);
+  border-radius: var(--r-card); overflow: hidden;
+}
+.galeria-monstruos img {
+  width: 100%; display: block; aspect-ratio: 4 / 5; object-fit: cover;
+  transition: transform 0.25s ease;
+}
+.galeria-monstruos figure:hover img { transform: scale(1.05); }
+.galeria-monstruos figcaption {
+  padding: 12px 16px; font-size: 15px; color: var(--niebla);
+}
+.galeria-monstruos figcaption b { color: var(--hueso); }
 
 /* ---------- Horario ---------- */
 .timeline { list-style: none; }

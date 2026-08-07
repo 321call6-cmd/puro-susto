@@ -58,6 +58,14 @@
     <symbol id="i-bruja" viewBox="0 0 24 24">
       <path d="M14.5 3.5 8 10.5l-1.5 6h11L14.5 3.5zM3 18h18c.6 0 1 .4 1 1s-.4 1-1 1H3c-.6 0-1-.4-1-1s.4-1 1-1z"/>
     </symbol>
+    <!-- Frankenstein -->
+    <symbol id="i-franky" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M5 3h14v4h2v2.4h-2v6.1A4.5 4.5 0 0 1 14.5 20h-5A4.5 4.5 0 0 1 5 15.5V9.4H3V7h2V3zm2.2 2v2h1.9V5H7.2zm3.9 0v2h1.8V5h-1.8zm3.7 0v2h1.9V5h-1.9zM8.3 13a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zm7.4 0a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zM9 15.4h6V17H9v-1.6z"/>
+    </symbol>
+    <!-- Casa embrujada -->
+    <symbol id="i-casa" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M2 21v-7.5h2.5V9.8L8 6.5l3.5 3.3v1.7h1V5.8L16 3l3.5 2.8v7.7H22V21H2zm8.3 0h3.4v-3.2a1.7 1.7 0 0 0-3.4 0V21zM7 13.8a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zm9.5-4a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/>
+    </symbol>
     <!-- Candado (votación dormida) -->
     <symbol id="i-candado" viewBox="0 0 24 24">
       <path d="M12 2a5 5 0 0 0-5 5v3H6c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2h-1V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 7a1.8 1.8 0 0 1 1 3.3V19a1 1 0 0 1-2 0v-1.7a1.8 1.8 0 0 1 1-3.3z"/>
@@ -108,6 +116,7 @@
 
 <!-- ==================== RSVP ==================== -->
 <section id="asistencia">
+  <svg class="monster-bg" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calavera"/></svg>
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-calavera"/></svg>
@@ -157,6 +166,7 @@
 
 <!-- ==================== CONFIRMADOS + CUOTA ==================== -->
 <section id="confirmados">
+  <svg class="monster-bg left" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vampiro"/></svg>
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-vampiro"/></svg>
@@ -206,6 +216,7 @@
 
 <!-- ==================== HORARIO Y REGLAS ==================== -->
 <section id="horario">
+  <svg class="monster-bg" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-franky"/></svg>
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-bruja"/></svg>
@@ -241,6 +252,7 @@
 
 <!-- ==================== JAM ==================== -->
 <section id="jam">
+  <svg class="monster-bg left" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-murcielago"/></svg>
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-murcielago"/></svg>
@@ -262,6 +274,7 @@
 
 <!-- ==================== FOTOS ==================== -->
 <section id="fotos" style="padding-top: 0;">
+  <svg class="monster-bg" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-fantasma"/></svg>
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-fantasma"/></svg>
@@ -282,6 +295,7 @@
 
 <!-- ==================== JUEGOS ==================== -->
 <section id="juegos" style="padding-top: 0;">
+  <svg class="monster-bg left" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calabaza"/></svg>
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-calabaza"/></svg>
@@ -299,8 +313,31 @@
   </div>
 </section>
 
+<!-- ==================== INSPIRACIÓN DE DISFRAZ ==================== -->
+<section id="inspiracion" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="section-head">
+      <svg><use href="#i-franky"/></svg>
+      <div>
+        <h2>El listón está aquí</h2>
+        <span class="caption">Inspiración de disfraz · el 31 se vota y hay bote</span>
+      </div>
+    </div>
+    <div class="galeria-monstruos">
+      <figure><img src="images/monstruo-franky.webp" alt="Monstruo clásico de tornillos en el cuello" loading="lazy"><figcaption><b>El clásico</b> · nunca falla</figcaption></figure>
+      <figure><img src="images/monstruo-payaso.webp" alt="Payaso terrorífico" loading="lazy"><figcaption><b>El payaso</b> · de tus pesadillas</figcaption></figure>
+      <figure><img src="images/monstruo-lobo.webp" alt="Hombre lobo bajo la luna" loading="lazy"><figcaption><b>El lunático</b> · aúlla en el Jam</figcaption></figure>
+      <figure><img src="images/monstruo-laguna.webp" alt="Monstruo de la laguna" loading="lazy"><figcaption><b>El de la laguna</b> · vintage total</figcaption></figure>
+      <figure><img src="images/monstruo-palido.webp" alt="Monstruo pálido que ve con las manos" loading="lazy"><figcaption><b>El que ve con las manos</b> · alto riesgo, alto premio</figcaption></figure>
+      <figure><img src="images/monstruo-baba.webp" alt="Monstruo baboso" loading="lazy"><figcaption><b>El ectoplasma</b> · para valientes del maquillaje</figcaption></figure>
+    </div>
+    <p class="niebla mt-2" style="font-size: 15px;">Puntos extra si tu disfraz hace que los anfitriones griten. Recuerda: el mejor disfraz se lleva el bote completo.</p>
+  </div>
+</section>
+
 <!-- ==================== VOTACIÓN ==================== -->
 <section id="votacion">
+  <svg class="monster-bg" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bruja"/></svg>
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-calavera"/></svg>
@@ -347,6 +384,7 @@
 
 <!-- ==================== LUGAR ==================== -->
 <section id="lugar">
+  <svg class="monster-bg left" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-casa"/></svg>
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-murcielago"/></svg>
