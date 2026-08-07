@@ -8,7 +8,7 @@
    (Implementar → Nueva implementación → App web →
     Ejecutar como: Yo · Acceso: Cualquier persona).
    ------------------------------------------------------------ */
-const API_URL = ''; // ej. 'https://script.google.com/macros/s/XXXX/exec'
+const API_URL = 'https://script.google.com/macros/s/AKfycbwyaHDTp_BWN_48Pk7bFielSHAAa3QLQ1nwT5T9lZuwkPMQD-zVzx-iF4N5Jy_L24GfYw/exec';
 
 /* WhatsApp de los anfitriones para sugerir juegos / dudas.
    Solo dígitos con lada internacional, ej. '526641234567' */
