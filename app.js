@@ -114,6 +114,30 @@ function linkWhats(numero, texto) {
   return numero ? `https://wa.me/${numero}?text=${t}` : `https://wa.me/?text=${t}`;
 }
 
+/* ---------------- Modal de confirmación ---------------- */
+function abrirModal(titulo, cuerpoHtml) {
+  const modal = $('modal-rsvp');
+  if (!modal) return false;
+  setText('modal-titulo', titulo);
+  $('modal-cuerpo').innerHTML = cuerpoHtml;
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden'; // que no se scrollee la página de atrás
+  $('modal-cerrar')?.focus();
+  return true;
+}
+
+function cerrarModal() {
+  const modal = $('modal-rsvp');
+  if (!modal || modal.classList.contains('hidden')) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+on('modal-cerrar', 'click', cerrarModal);
+// Clic en el fondo (fuera del panel) también cierra.
+$('modal-rsvp')?.addEventListener('click', (e) => { if (e.target.id === 'modal-rsvp') cerrarModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
+
 (function initWhats() {
   const juego = $('btn-sugerir-juego');
   if (juego) juego.href = linkWhats(WHATSAPP_JUEGOS, '🎃 PURO SUSTO — propongo un juego para la noche: ');
@@ -347,27 +371,50 @@ on('form-rsvp', 'submit', async (e) => {
     msg.textContent = 'Algo salió mal en el inframundo. Intenta de nuevo o confirma por WhatsApp.';
     return;
   }
-  if (res.status === 'duplicado' || res.duplicado) {
-    msg.innerHTML = `Ya estabas en la lista, ${escapeHtml(payload.nombre)} — el susto no se duplica. <span class="badge-vas">¡Vas!</span>`;
-  } else if (res.ok || res.status === 'nuevo') {
-    const notaDisfraz = payload.sin_disfraz
-      ? `<br><span class="niebla" style="font-size:15px;">Anotamos ${payload.sin_disfraz} sin disfraz: +${'$' + (payload.sin_disfraz * 200).toLocaleString('es-MX')} al premio. 😈</span>`
+  const esNuevo = !(res.status === 'duplicado' || res.duplicado) && (res.ok || res.status === 'nuevo');
+
+  if (res.status === 'duplicado' || res.duplicado || esNuevo) {
+    const nombre = escapeHtml(payload.nombre);
+
+    const bloqueDisfraz = payload.sin_disfraz
+      ? `<p class="niebla mt-1" style="font-size:15px;">Anotamos ${payload.sin_disfraz} sin disfraz: +${mxn(payload.sin_disfraz * 200)} al premio. 😈</p>`
       : '';
-    const urlCorregir = linkWhats(WHATSAPP_DUDAS, `🎃 PURO SUSTO — soy ${payload.nombre} y necesito corregir mi confirmación: `);
-    const notaError = `<br><span class="niebla" style="font-size:15px;">¿Te equivocaste en algo? <a href="${urlCorregir}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> y lo corregimos.</span>`;
 
     /* Acaba de decir que sí: es el mejor momento para pedirle algo.
        Sugerir un juego es lo ÚNICO que puede hacer hoy — el Jam, el álbum
        y la votación no despiertan hasta el 31. */
     const urlJuego = linkWhats(WHATSAPP_JUEGOS, `🎃 PURO SUSTO — soy ${payload.nombre} y propongo este juego para la noche: `);
-    const ctaJuego =
-      `<div class="mt-2"><span class="niebla" style="font-size:15px;">Ya que estás: ¿tienes un juego que nunca falla?</span><br>` +
-      `<a class="btn btn-fantasma mt-1" href="${urlJuego}" target="_blank" rel="noopener">Propón un juego</a></div>`;
-    msg.innerHTML = `Listo, ${escapeHtml(payload.nombre)}. Te escribimos por WhatsApp para el pago. <span class="badge-vas">¡Vas!</span>${notaDisfraz}${ctaJuego}${notaError}`;
-    $('form-rsvp').reset();
-    sincronizarNombresAcomp();
-    sincronizarSinDisfraz();
-    cargarDatos();
+    const bloqueJuego =
+      `<div class="mt-3"><p class="niebla" style="font-size:15px;">Ya que estás: ¿tienes un juego que nunca falla?</p>` +
+      `<a class="btn btn-rojo mt-1" href="${urlJuego}" target="_blank" rel="noopener">Propón un juego</a></div>`;
+
+    const urlCorregir = linkWhats(WHATSAPP_DUDAS, `🎃 PURO SUSTO — soy ${payload.nombre} y necesito corregir mi confirmación: `);
+    const bloqueCorregir =
+      `<p class="niebla mt-3" style="font-size:14px;">¿Te equivocaste en algo? ` +
+      `<a href="${urlCorregir}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> y lo corregimos.</p>`;
+
+    const encabezado = esNuevo
+      ? `<p><b>${nombre}</b>, ya estás en la lista.</p>
+         <p class="niebla mt-1" style="font-size:15px;">Te escribimos por WhatsApp para coordinar el pago.</p>`
+      : `<p><b>${nombre}</b>, ya estabas en la lista — el susto no se duplica.</p>`;
+
+    const cuerpo =
+      `<div><span class="badge-vas">¡Vas!</span></div>` +
+      `<div class="mt-2">${encabezado}</div>` +
+      bloqueDisfraz + bloqueJuego + bloqueCorregir;
+
+    // Si por lo que sea no existe el modal, no dejamos al invitado sin respuesta.
+    if (!abrirModal(esNuevo ? '¡Caíste!' : 'Ya estabas', cuerpo)) {
+      msg.innerHTML = cuerpo;
+      msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    if (esNuevo) {
+      $('form-rsvp').reset();
+      sincronizarNombresAcomp();
+      sincronizarSinDisfraz();
+      cargarDatos();
+    }
   } else {
     msg.className = 'form-msg error';
     msg.textContent = res.error || 'No se pudo confirmar. Intenta de nuevo.';
