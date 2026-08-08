@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 
@@ -74,11 +74,11 @@
   <div class="nav-inner">
     <a class="nav-logo" href="#top">Puro Susto</a>
     <nav class="links">
-      <a href="#asistencia">Confirmar</a>
-      <a href="#cuota">Cuota</a>
-      <a href="la-noche.html">La noche</a>
-      <a href="premios.html">Premios</a>
-      <a href="#lugar">Lugar</a>
+      <a href="#asistencia" data-i18n="nav.confirmar">Confirmar</a>
+      <a href="#cuota" data-i18n="nav.cuota">Cuota</a>
+      <a href="la-noche.html" data-i18n="nav.noche">La noche</a>
+      <a href="premios.html" data-i18n="nav.premios">Premios</a>
+      <a href="#lugar" data-i18n="nav.lugar">Lugar</a>
     </nav>
   </div>
 </header>
@@ -89,21 +89,21 @@
   <h1>Puro<br>Susto</h1>
   <div class="tagline">Puro susto. Pura fiesta.</div>
   <div class="meta">
-    Sábado 31 de octubre 2026 · 6:00 PM – 1:00 AM
-    <span class="niebla">Salón Castilla · Blvd. Viñas del Mar, Tijuana</span>
+    <span data-i18n="hero.meta">Sábado 31 de octubre 2026 · 6:00 PM – 1:00 AM</span>
+    <span class="niebla" data-i18n="hero.lugar">Salón Castilla · Blvd. Viñas del Mar, Tijuana</span>
   </div>
 
   <div class="countdown" id="countdown" aria-label="Cuenta regresiva">
-    <div class="count-cell"><b id="cd-d">—</b><span>días</span></div>
-    <div class="count-cell"><b id="cd-h">—</b><span>horas</span></div>
-    <div class="count-cell"><b id="cd-m">—</b><span>min</span></div>
-    <div class="count-cell"><b id="cd-s">—</b><span>seg</span></div>
+    <div class="count-cell"><b id="cd-d">—</b><span data-i18n="cd.dias">días</span></div>
+    <div class="count-cell"><b id="cd-h">—</b><span data-i18n="cd.horas">horas</span></div>
+    <div class="count-cell"><b id="cd-m">—</b><span data-i18n="cd.min">min</span></div>
+    <div class="count-cell"><b id="cd-s">—</b><span data-i18n="cd.seg">seg</span></div>
   </div>
 
   <div class="cta-row">
-    <a class="btn btn-rojo" href="#asistencia">¿Te atreves? Confirma</a>
-    <a class="btn btn-fantasma" href="#" id="btn-calendario">Agendar</a>
-    <a class="btn btn-fantasma" href="#" id="btn-compartir">Pasar la invitación</a>
+    <a class="btn btn-rojo" href="#asistencia" data-i18n="hero.cta">¿Te atreves? Confirma</a>
+    <a class="btn btn-fantasma" href="#" id="btn-calendario" data-i18n="hero.agendar">Agendar</a>
+    <a class="btn btn-fantasma" href="#" id="btn-compartir" data-i18n="hero.compartir">Pasar la invitación</a>
   </div>
 </section>
 
@@ -114,23 +114,23 @@
     <div class="section-head">
       <svg><use href="#i-calavera"/></svg>
       <div>
-        <h2>Confirma tu asistencia</h2>
-        <span class="caption">Disfraz obligatorio · acompañantes pagan cuota completa · el pago se coordina por WhatsApp</span>
+        <h2 data-i18n="rsvp.titulo">Confirma tu asistencia</h2>
+        <span class="caption" data-i18n="rsvp.caption">Disfraz obligatorio · acompañantes pagan cuota completa · el pago se coordina por WhatsApp</span>
       </div>
     </div>
 
     <div class="card" style="max-width: 560px;">
       <form id="form-rsvp">
-        <label for="f-nombre">Tu nombre completo</label>
-        <input type="text" id="f-nombre" placeholder="Tu nombre, si te atreves…" required maxlength="60" autocomplete="name">
+        <label for="f-nombre" data-i18n="rsvp.nombre">Tu nombre completo</label>
+        <input type="text" id="f-nombre" data-i18n-ph="rsvp.nombre.ph" placeholder="Tu nombre, si te atreves…" required maxlength="60" autocomplete="name">
 
-        <label for="f-whats">Tu WhatsApp (no se publica)</label>
-        <input type="tel" id="f-whats" placeholder="664 123 4567" required maxlength="20" autocomplete="tel">
+        <label for="f-whats" data-i18n="rsvp.whats">Tu WhatsApp (no se publica)</label>
+        <input type="tel" id="f-whats" data-i18n-ph="rsvp.whats.ph" placeholder="664 123 4567" required maxlength="20" autocomplete="tel">
 
-        <label for="f-acomp">¿Cuántos acompañantes traes?</label>
+        <label for="f-acomp" data-i18n="rsvp.acomp">¿Cuántos acompañantes traes?</label>
         <select id="f-acomp">
-          <option value="0" selected>Voy solo/a</option>
-          <option value="1">+1 acompañante</option>
+          <option value="0" selected data-i18n="rsvp.acomp.0">Voy solo/a</option>
+          <option value="1" data-i18n="rsvp.acomp.1">+1 acompañante</option>
           <option value="2">+2 acompañantes</option>
           <option value="3">+3 acompañantes</option>
           <option value="4">+4 acompañantes</option>
@@ -139,17 +139,17 @@
         <!-- app.js genera un campo por acompañante según el número elegido arriba -->
         <div id="acomp-nombres-box" class="hidden"></div>
 
-        <label for="f-sindisfraz">¿Alguien de tu grupo irá sin disfraz? (+$200 c/u, directo al premio)</label>
+        <label for="f-sindisfraz" data-i18n="rsvp.sindisfraz">¿Alguien de tu grupo irá sin disfraz?</label>
         <!-- app.js regenera estas opciones según el tamaño del grupo (tú + acompañantes) -->
         <select id="f-sindisfraz">
           <option value="0" selected>Nadie — todos disfrazados 🎃</option>
           <option value="1">1 sin disfraz (+$200)</option>
         </select>
 
-        <p class="niebla" style="font-size:14px; margin-top:10px;">La comida va incluida en la cuota. <b>Lo que tomes, lo traes tú</b> — trae lo que se te antoje.</p>
+        <p class="niebla" style="font-size:14px; margin-top:10px;" data-i18n-html="rsvp.bebidas"></p>
 
         <div class="mt-2">
-          <button type="submit" class="btn btn-rojo" id="btn-rsvp">¡Voy!</button>
+          <button type="submit" class="btn btn-rojo" id="btn-rsvp" data-i18n="rsvp.boton">¡Voy!</button>
         </div>
         <div class="form-msg" id="rsvp-msg" role="status"></div>
       </form>
@@ -160,8 +160,8 @@
 <!-- Modal de confirmación: app.js lo llena y lo abre al confirmar -->
 <div class="modal-fondo hidden" id="modal-rsvp" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
   <div class="modal-panel">
-    <button type="button" class="modal-cerrar" id="modal-cerrar" aria-label="Cerrar">&times;</button>
-    <h2 id="modal-titulo">¡Caíste!</h2>
+    <button type="button" class="modal-cerrar" id="modal-cerrar" data-i18n-title="modal.cerrar" aria-label="Cerrar">&times;</button>
+    <h2 id="modal-titulo"></h2>
     <div id="modal-cuerpo"></div>
   </div>
 </div>
@@ -173,19 +173,19 @@
     <div class="section-head">
       <svg><use href="#i-vampiro"/></svg>
       <div>
-        <h2>Los que ya cayeron</h2>
-        <span class="caption" id="ultima-actualizacion">Lista pública · en vivo</span>
+        <h2 data-i18n="conf.titulo">Los que ya cayeron</h2>
+        <span class="caption" id="ultima-actualizacion" data-i18n="conf.caption">Lista pública · en vivo</span>
       </div>
     </div>
 
     <div class="stats-row">
-      <div class="stat stat-rojo"><b id="stat-personas">—</b><span>personas confirmadas</span></div>
-      <div class="stat"><b id="stat-cuota">—</b><span>cuota por persona (en vivo)</span></div>
-      <div class="stat"><b id="stat-bote">—</b><span>premio al mejor disfraz 💰</span></div>
+      <div class="stat stat-rojo"><b id="stat-personas">—</b><span data-i18n="conf.personas">personas confirmadas</span></div>
+      <div class="stat"><b id="stat-cuota">—</b><span data-i18n="conf.cuota">cuota por persona (en vivo)</span></div>
+      <div class="stat"><b id="stat-bote">—</b><span data-i18n="conf.bote">premio al mejor disfraz 💰</span></div>
     </div>
 
     <div class="lista-confirmados" id="lista-confirmados">
-      <span class="chip niebla">Cargando la lista…</span>
+      <span class="chip niebla" data-i18n="conf.cargando">Cargando la lista…</span>
     </div>
   </div>
 </section>
@@ -194,20 +194,20 @@
   <div class="wrap">
     <div class="grid-2">
       <div class="card">
-        <h3>Desglose de gastos</h3>
-        <p class="caption">Transparencia total: todo gasto aparece aquí</p>
+        <h3 data-i18n="gastos.titulo">Desglose de gastos</h3>
+        <p class="caption" data-i18n="gastos.caption">Transparencia total: todo gasto aparece aquí</p>
         <table class="gastos">
-          <thead><tr><th>Concepto</th><th>Tipo</th><th style="text-align:right">Monto</th></tr></thead>
+          <thead><tr><th data-i18n="gastos.concepto">Concepto</th><th data-i18n="gastos.tipo">Tipo</th><th style="text-align:right" data-i18n="gastos.monto">Monto</th></tr></thead>
           <tbody id="tabla-gastos">
-            <tr><td class="niebla" colspan="3">Cargando gastos…</td></tr>
+            <tr><td class="niebla" colspan="3" data-i18n="gastos.cargando">Cargando gastos…</td></tr>
           </tbody>
         </table>
       </div>
       <div class="card">
-        <h3>¿Cómo se calcula tu cuota?</h3>
-        <p class="mt-1">Los gastos <b>fijos</b> se dividen entre todos los confirmados; los <b>por persona</b> se suman por cabeza. Entre más seamos, más barato sale el susto.</p>
+        <h3 data-i18n="cuota.titulo">¿Cómo se calcula tu cuota?</h3>
+        <p class="mt-1" data-i18n-html="cuota.explica"></p>
         <p class="mt-2" id="cuota-formula" style="font-size: 20px; font-weight: 600;"></p>
-        <p class="mt-2 niebla" style="font-size: 15px;">El premio al mejor disfraz crece con cada confirmado (semilla por persona) y con cada rebelde sin disfraz (+$200).</p>
+        <p class="mt-2 niebla" style="font-size: 15px;" data-i18n-html="cuota.nota"></p>
       </div>
     </div>
   </div>
@@ -219,11 +219,11 @@
     <div class="grid-2">
       <a class="card card-link" href="la-noche.html">
         <svg><use href="#i-bruja"/></svg>
-        <div><h3>La noche completa →</h3><p class="niebla">Horario, reglas, el Jam para tu música, fotos y juegos.</p></div>
+        <div><h3 data-i18n="explora.noche">La noche completa →</h3><p class="niebla" data-i18n="explora.nocheDesc"></p></div>
       </a>
       <a class="card card-link" href="premios.html">
         <svg><use href="#i-calavera"/></svg>
-        <div><h3>Premios y votación →</h3><p class="niebla">6 trofeos esqueleto. El 31 se vota desde aquí.</p></div>
+        <div><h3 data-i18n="explora.premios">Premios y votación →</h3><p class="niebla" data-i18n="explora.premiosDesc"></p></div>
       </a>
     </div>
   </div>
@@ -235,8 +235,8 @@
     <div class="section-head">
       <svg><use href="#i-murcielago"/></svg>
       <div>
-        <h2>La guarida</h2>
-        <span class="caption">Salón Castilla · Blvd. Viñas del Mar, Tijuana</span>
+        <h2 data-i18n="lugar.titulo">La guarida</h2>
+        <span class="caption" data-i18n="lugar.caption">Salón Castilla · Blvd. Viñas del Mar, Tijuana</span>
       </div>
     </div>
     <iframe class="mapa-frame" id="mapa"
@@ -244,8 +244,8 @@
       loading="lazy" referrerpolicy="no-referrer-when-downgrade"
       title="Mapa al Salón Castilla"></iframe>
     <div class="mt-2 center">
-      <a class="btn btn-fantasma" href="https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n+Castilla%2C+Blvd.+Vi%C3%B1as+del+Mar%2C+Tijuana" target="_blank" rel="noopener">Cómo llegar</a>
-      <a class="btn btn-fantasma" id="btn-dudas" href="#" target="_blank" rel="noopener">¿Dudas? WhatsApp</a>
+      <a class="btn btn-fantasma" href="https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n+Castilla%2C+Blvd.+Vi%C3%B1as+del+Mar%2C+Tijuana" target="_blank" rel="noopener" data-i18n="lugar.comoLlegar">Cómo llegar</a>
+      <a class="btn btn-fantasma" id="btn-dudas" href="#" target="_blank" rel="noopener" data-i18n="lugar.dudas">¿Dudas? WhatsApp</a>
     </div>
   </div>
 </section>
@@ -254,9 +254,10 @@
 <footer>
   <div class="logo-line">Puro Susto</div>
   <p>Puro susto. Pura fiesta. — 31 · 10 · 2026 · Tijuana</p>
-  <p style="font-size: 13px;"><a href="la-noche.html">La noche</a> · <a href="premios.html">Premios y votación</a></p>
+  <p style="font-size: 13px;" data-i18n-html="pie.links"></p>
 </footer>
 
-<script src="app.js?v=10"></script>
+<script src="i18n.js?v=1"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>

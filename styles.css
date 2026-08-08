@@ -402,3 +402,22 @@ footer p { color: var(--niebla); font-size: 15px; margin-top: 10px; }
   .modal-panel { padding: 30px 20px 24px; }
   .modal-panel .btn { width: 100%; }
 }
+
+/* ---------- Switch de idioma ----------
+   Vive fuera de nav.links a propósito: esa lista se oculta en móvil y el
+   toggle tiene que verse en todos los tamaños. */
+.lang-toggle {
+  display: flex; align-items: center; gap: 2px;
+  font-family: var(--font-ui); font-weight: 700;
+  font-size: 14px; letter-spacing: 1px;
+}
+.lang-toggle button {
+  font: inherit; letter-spacing: inherit;
+  background: none; border: none; cursor: pointer;
+  color: var(--niebla); padding: 6px 8px;
+  border-radius: var(--r-chip);
+  transition: color 0.15s ease;
+}
+.lang-toggle button:hover { color: var(--hueso); }
+.lang-toggle button[aria-current="true"] { color: var(--rojo-sangre); }
+.lang-toggle span { color: #26262c; }

@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 <!-- ==================== ICONOS (monstruos del brand) ==================== -->
@@ -62,49 +62,48 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">Puro Susto</a>
     <nav class="links">
-      <a href="index.html#asistencia">Confirmar</a>
-      <a href="index.html#cuota">Cuota</a>
-      <a href="la-noche.html">La noche</a>
-      <a href="premios.html">Premios</a>
-      <a href="index.html#lugar">Lugar</a>
+      <a href="index.html#asistencia" data-i18n="nav.confirmar">Confirmar</a>
+      <a href="index.html#cuota" data-i18n="nav.cuota">Cuota</a>
+      <a href="la-noche.html" data-i18n="nav.noche">La noche</a>
+      <a href="premios.html" data-i18n="nav.premios">Premios</a>
+      <a href="index.html#lugar" data-i18n="nav.lugar">Lugar</a>
     </nav>
   </div>
 </header>
 
 <main>
 <section class="hero-mini">
-  <h2 style="font-size: clamp(44px, 8vw, 72px);">Premios</h2>
-  <span class="caption">6 trofeos esqueleto · se vota desde tu celular</span>
+  <h2 style="font-size: clamp(44px, 8vw, 72px);" data-i18n="prem.titulo">Premios</h2>
+  <span class="caption" data-i18n="prem.caption"></span>
 </section>
 
 <section id="votacion" style="padding-top: 30px;">
   <div class="wrap">
     <div class="grid-2" style="margin-bottom: 20px;">
       <div class="card card-destacada">
-        <h3>Se vota aquí, el 31</h3>
-        <p><b>Mejor disfraz</b> — trofeo + <b>el premio en efectivo completo</b> 💰<br>
-        <b>Más creativo</b> · <b>Más ridículo</b> · <b>Más terrorífico</b> — trofeo y gloria eterna.</p>
-        <p class="mt-2 niebla">1 voto por persona por categoría. El sistema no perdona tramposos.</p>
+        <h3 data-i18n="prem.votaAqui">Se vota aquí, el 31</h3>
+        <p data-i18n-html="prem.categorias"></p>
+        <p class="mt-2 niebla" data-i18n="prem.unVoto"></p>
       </div>
       <div class="card">
-        <h3>Los comodines</h3>
-        <p>Los otros <b>2 trofeos</b> los deciden los anfitriones en vivo, por puro capricho y justicia poética. Nadie está a salvo.</p>
-        <p class="mt-2 niebla">El monto del premio crece con cada confirmado y cada rebelde sin disfraz — míralo en vivo en la <a href="index.html#confirmados">página principal</a>.</p>
+        <h3 data-i18n="prem.comodines">Los comodines</h3>
+        <p data-i18n-html="prem.comodinesTexto"></p>
+        <p class="mt-2 niebla" data-i18n-html="prem.comodinesNota"></p>
       </div>
     </div>
 
     <div class="card votacion-dormida" id="votacion-dormida">
       <svg><use href="#i-candado"/></svg>
-      <h3>La votación está sellada</h3>
-      <p class="niebla">Se abre el 31 de octubre durante la fiesta. Vuelve aquí desde tu celular cuando los anfitriones den la señal.</p>
+      <h3 data-i18n="prem.sellada">La votación está sellada</h3>
+      <p class="niebla" data-i18n="prem.selladaTexto"></p>
     </div>
 
     <div class="hidden" id="votacion-activa">
       <div class="card">
-        <label for="v-votante">¿Quién vota? (tu nombre, como confirmaste)</label>
-        <input type="text" id="v-votante" placeholder="Tu nombre" maxlength="60">
+        <label for="v-votante" data-i18n="prem.votante"></label>
+        <input type="text" id="v-votante" data-i18n-ph="prem.votante.ph" placeholder="Tu nombre" maxlength="60">
         <div id="categorias-voto" class="mt-2"></div>
-        <div class="mt-2"><button class="btn btn-rojo" id="btn-votar">Enviar mis votos</button></div>
+        <div class="mt-2"><button class="btn btn-rojo" id="btn-votar" data-i18n="prem.enviar">Enviar mis votos</button></div>
         <div class="form-msg" id="voto-msg" role="status"></div>
       </div>
     </div>
@@ -115,9 +114,10 @@
 <footer>
   <div class="logo-line">Puro Susto</div>
   <p>Puro susto. Pura fiesta. — 31 · 10 · 2026 · Tijuana</p>
-  <p style="font-size: 13px;"><a href="la-noche.html">La noche</a> · <a href="premios.html">Premios y votación</a> · Dudas: por WhatsApp.</p>
+  <p style="font-size: 13px;" data-i18n-html="pie.links"></p>
 </footer>
 
-<script src="app.js?v=10"></script>
+<script src="i18n.js?v=1"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>

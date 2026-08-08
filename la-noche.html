@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 <!-- ==================== ICONOS (monstruos del brand) ==================== -->
@@ -62,19 +62,19 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">Puro Susto</a>
     <nav class="links">
-      <a href="index.html#asistencia">Confirmar</a>
-      <a href="index.html#cuota">Cuota</a>
-      <a href="la-noche.html">La noche</a>
-      <a href="premios.html">Premios</a>
-      <a href="index.html#lugar">Lugar</a>
+      <a href="index.html#asistencia" data-i18n="nav.confirmar">Confirmar</a>
+      <a href="index.html#cuota" data-i18n="nav.cuota">Cuota</a>
+      <a href="la-noche.html" data-i18n="nav.noche">La noche</a>
+      <a href="premios.html" data-i18n="nav.premios">Premios</a>
+      <a href="index.html#lugar" data-i18n="nav.lugar">Lugar</a>
     </nav>
   </div>
 </header>
 
 <main>
 <section class="hero-mini">
-  <h2 style="font-size: clamp(44px, 8vw, 72px);">La noche</h2>
-  <span class="caption">Sábado 31 de octubre · 6:00 PM – 1:00 AM · Salón Castilla</span>
+  <h2 style="font-size: clamp(44px, 8vw, 72px);" data-i18n="noche.titulo">La noche</h2>
+  <span class="caption" data-i18n="noche.caption"></span>
 </section>
 
 <section id="horario" style="padding-top: 30px;">
@@ -82,23 +82,23 @@
   <div class="wrap">
     <div class="grid-2">
       <div class="card">
-        <h3>Horario</h3>
+        <h3 data-i18n="noche.horario">Horario</h3>
         <ul class="timeline">
-          <li><span class="hora">6:00 PM</span><span>Abren las puertas. Música, botana y niebla.</span></li>
-          <li><span class="hora">8:00 PM</span><span>Cena.</span></li>
-          <li><span class="hora">9:30 PM</span><span>Pasarela de disfraces: todos desfilan.</span></li>
-          <li><span class="hora">10:00 PM</span><span>Se abre la <a href="premios.html">votación</a> desde tu celular.</span></li>
-          <li><span class="hora">11:00 PM</span><span>Premiación: 6 trofeos esqueleto.</span></li>
-          <li><span class="hora">11:30 PM</span><span>Jam libre y juegos hasta que el cuerpo aguante.</span></li>
-          <li><span class="hora">1:00 AM</span><span>Fin del susto. Nos vemos el próximo año.</span></li>
+          <li><span class="hora">6:00 PM</span><span data-i18n="noche.h1"></span></li>
+          <li><span class="hora">8:00 PM</span><span data-i18n="noche.h2"></span></li>
+          <li><span class="hora">9:30 PM</span><span data-i18n="noche.h3"></span></li>
+          <li><span class="hora">10:00 PM</span><span data-i18n-html="noche.h4"></span></li>
+          <li><span class="hora">11:00 PM</span><span data-i18n="noche.h5"></span></li>
+          <li><span class="hora">11:30 PM</span><span data-i18n="noche.h6"></span></li>
+          <li><span class="hora">1:00 AM</span><span data-i18n="noche.h7"></span></li>
         </ul>
       </div>
       <div class="card">
-        <h3>Reglas de la casa</h3>
-        <div class="regla"><svg><use href="#i-calavera"/></svg><p><b>Sin disfraz, pagas $200</b> que van íntegros al premio del mejor disfraz.</p></div>
-        <div class="regla"><svg><use href="#i-vampiro"/></svg><p><b>Transparencia total:</b> cada peso gastado está publicado en el <a href="index.html#cuota">desglose</a>.</p></div>
-        <div class="regla"><svg><use href="#i-fantasma"/></svg><p><b>Acompañantes bienvenidos</b> — pagan cuota completa igual que todos.</p></div>
-        <div class="regla"><svg><use href="#i-calabaza"/></svg><p><b>El pago se coordina por WhatsApp.</b> Aquí nunca verás números de cuenta.</p></div>
+        <h3 data-i18n="noche.reglas">Reglas de la casa</h3>
+        <div class="regla"><svg><use href="#i-calavera"/></svg><p data-i18n-html="noche.r1"></p></div>
+        <div class="regla"><svg><use href="#i-vampiro"/></svg><p data-i18n-html="noche.r2"></p></div>
+        <div class="regla"><svg><use href="#i-fantasma"/></svg><p data-i18n-html="noche.r3"></p></div>
+        <div class="regla"><svg><use href="#i-calabaza"/></svg><p data-i18n-html="noche.r4"></p></div>
       </div>
     </div>
   </div>
@@ -109,11 +109,11 @@
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-calabaza"/></svg>
-      <div><h2>Juegos</h2><span class="caption">Propón el tuyo</span></div>
+      <div><h2 data-i18n="juegos.titulo">Juegos</h2><span class="caption" data-i18n="juegos.caption"></span></div>
     </div>
     <div class="card">
-      <p>Habrá juegos toda la noche. ¿Tienes uno que nunca falla? <b>Mándanos tu propuesta por WhatsApp</b> y entra al line-up. Esto <b>ya está abierto</b> — no hay que esperar al 31.</p>
-      <div class="mt-2"><a class="btn btn-fantasma" id="btn-sugerir-juego" href="#" target="_blank" rel="noopener">Sugerir un juego</a></div>
+      <p data-i18n-html="juegos.texto"></p>
+      <div class="mt-2"><a class="btn btn-fantasma" id="btn-sugerir-juego" href="#" target="_blank" rel="noopener" data-i18n="juegos.boton">Sugerir un juego</a></div>
     </div>
   </div>
 </section>
@@ -122,13 +122,13 @@
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-murcielago"/></svg>
-      <div><h2>El Jam</h2><span class="caption">Tú pones la música · Spotify Jam en vivo</span></div>
+      <div><h2 data-i18n="jam.titulo">El Jam</h2><span class="caption" data-i18n="jam.caption"></span></div>
     </div>
     <div class="card">
-      <p>La música la armamos entre todos con un <b>Jam de Spotify</b>: te unes desde tu celular y encolas lo que quieras — de Thriller a los corridos, sin juzgar (bueno, un poco).</p>
+      <p data-i18n-html="jam.texto"></p>
       <div class="mt-2">
-        <a class="btn btn-fantasma hidden" id="btn-jam" href="#" target="_blank" rel="noopener">Unirme al Jam</a>
-        <span class="badge-rojo" id="jam-dormido">Jam disponible el 31 de octubre</span>
+        <a class="btn btn-fantasma hidden" id="btn-jam" href="#" target="_blank" rel="noopener" data-i18n="jam.boton">Unirme al Jam</a>
+        <span class="badge-rojo" id="jam-dormido" data-i18n="jam.dormido"></span>
       </div>
     </div>
   </div>
@@ -139,13 +139,13 @@
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-fantasma"/></svg>
-      <div><h2>Fotos y videos</h2><span class="caption">El álbum compartido de la noche</span></div>
+      <div><h2 data-i18n="fotos.titulo">Fotos y videos</h2><span class="caption" data-i18n="fotos.caption"></span></div>
     </div>
     <div class="card">
-      <p>Todo lo que captures esa noche —fotos, videos, evidencia comprometedora— va al <b>álbum compartido</b> para que nadie se quede sin su copia.</p>
+      <p data-i18n-html="fotos.texto"></p>
       <div class="mt-2">
-        <a class="btn btn-fantasma hidden" id="btn-album" href="#" target="_blank" rel="noopener">Abrir el álbum</a>
-        <span class="badge-rojo" id="album-dormido">El álbum se abre el día de la fiesta</span>
+        <a class="btn btn-fantasma hidden" id="btn-album" href="#" target="_blank" rel="noopener" data-i18n="fotos.boton">Abrir el álbum</a>
+        <span class="badge-rojo" id="album-dormido" data-i18n="fotos.dormido"></span>
       </div>
     </div>
   </div>
@@ -156,15 +156,15 @@
   <div class="wrap">
     <div class="section-head">
       <svg><use href="#i-bruja"/></svg>
-      <div><h2>Preguntas del más allá</h2><span class="caption">FAQ</span></div>
+      <div><h2 data-i18n="faq.titulo">Preguntas del más allá</h2><span class="caption" data-i18n="faq.caption">FAQ</span></div>
     </div>
-    <details class="faq"><summary>¿Cuánto cuesta entrar?</summary><p>La cuota es transparente y en vivo: gastos fijos divididos entre confirmados + gastos por persona. El número exacto está en <a href="index.html#cuota">Cuota</a> y baja conforme más gente confirma.</p></details>
-    <details class="faq"><summary>¿Puedo llevar acompañante?</summary><p>Sí — indícalo al confirmar. <b>Pagan cuota completa</b>, aquí no hay mitades.</p></details>
-    <details class="faq"><summary>¿Qué pasa si no llevo disfraz?</summary><p>Pagas <b>$200</b> que van directo al premio del mejor disfraz. Tu flojera financia la gloria de alguien más.</p></details>
-    <details class="faq"><summary>¿Qué hay de tomar?</summary><p>La <b>comida va incluida</b> en la cuota. Las bebidas no: <b>cada quien trae lo que quiera tomar</b>. Sin listas, sin organizar nada — trae lo tuyo y ya.</p></details>
-    <details class="faq"><summary>¿Cómo pago mi cuota?</summary><p>Al confirmar te escribimos <b>por WhatsApp</b> con los datos. Por seguridad, nunca se publican en este sitio.</p></details>
-    <details class="faq"><summary>¿Cómo funcionan los premios?</summary><p>Son <b>6 trofeos esqueleto</b>: 4 se votan desde el celular (el mejor disfraz además gana el premio en efectivo) y 2 comodines los deciden los anfitriones en vivo. Detalles en <a href="premios.html">Premios</a>.</p></details>
-    <details class="faq"><summary>Confirmé y no puedo ir 😢</summary><p>Avísanos por WhatsApp lo antes posible: tu lugar afecta la cuota de los demás.</p></details>
+    <details class="faq"><summary data-i18n="faq.q1"></summary><p data-i18n-html="faq.a1"></p></details>
+    <details class="faq"><summary data-i18n="faq.q2"></summary><p data-i18n-html="faq.a2"></p></details>
+    <details class="faq"><summary data-i18n="faq.q3"></summary><p data-i18n-html="faq.a3"></p></details>
+    <details class="faq"><summary data-i18n="faq.q4"></summary><p data-i18n-html="faq.a4"></p></details>
+    <details class="faq"><summary data-i18n="faq.q5"></summary><p data-i18n-html="faq.a5"></p></details>
+    <details class="faq"><summary data-i18n="faq.q6"></summary><p data-i18n-html="faq.a6"></p></details>
+    <details class="faq"><summary data-i18n="faq.q7"></summary><p data-i18n-html="faq.a7"></p></details>
   </div>
 </section>
 </main>
@@ -172,9 +172,10 @@
 <footer>
   <div class="logo-line">Puro Susto</div>
   <p>Puro susto. Pura fiesta. — 31 · 10 · 2026 · Tijuana</p>
-  <p style="font-size: 13px;"><a href="la-noche.html">La noche</a> · <a href="premios.html">Premios y votación</a> · Dudas: por WhatsApp.</p>
+  <p style="font-size: 13px;" data-i18n-html="pie.links"></p>
 </footer>
 
-<script src="app.js?v=10"></script>
+<script src="i18n.js?v=1"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>

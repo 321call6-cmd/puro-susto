@@ -30,17 +30,31 @@ const FECHA_FIESTA = new Date('2026-10-31T18:00:00-07:00');
 const FECHA_FIN = new Date('2026-11-01T01:00:00-07:00');
 
 const CATEGORIAS_VOTO = [
-  { id: 'mejor', nombre: 'Mejor disfraz 💰 (gana el premio)' },
-  { id: 'creativo', nombre: 'Más creativo' },
-  { id: 'ridiculo', nombre: 'Más ridículo' },
-  { id: 'terrorifico', nombre: 'Más terrorífico' },
+  { id: 'mejor', clave: 'prem.catMejor' },
+  { id: 'creativo', clave: 'prem.catCreativo' },
+  { id: 'ridiculo', clave: 'prem.catRidiculo' },
+  { id: 'terrorifico', clave: 'prem.catTerrorifico' },
 ];
 
 /* ---------------- Helpers ---------------- */
 const $ = (id) => document.getElementById(id);
 const on = (id, ev, fn) => { const el = $(id); if (el) el.addEventListener(ev, fn); };
 const setText = (id, txt) => { const el = $(id); if (el) el.textContent = txt; };
-const mxn = (n) => '$' + Math.ceil(n).toLocaleString('es-MX');
+/* Tipo de cambio: se sobreescribe con el parámetro de Config si existe,
+   para poder actualizarlo sin tocar código. 0 = no mostrar aproximado. */
+let TIPO_CAMBIO_USD = 17;
+
+/* Todos los montos llevan MXN. Un americano que lee "$2,266" pelón entiende
+   dos mil dólares y se le va la sangre de la cara. */
+const mxn = (n) => '$' + Math.ceil(n).toLocaleString('es-MX') + ' MXN';
+
+/* Igual que mxn(), pero en inglés agrega el aproximado en dólares.
+   Solo para los números grandes (cuota y premio) — en la tabla sería ruido. */
+function mxnUsd(n) {
+  const base = mxn(n);
+  if (idioma() !== 'en' || !TIPO_CAMBIO_USD) return base;
+  return base + ' (≈US$' + Math.round(Number(n) / TIPO_CAMBIO_USD).toLocaleString('en-US') + ')';
+}
 
 function escapeHtml(s) {
   return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -58,8 +72,8 @@ if ($('cd-d')) {
       cont.style.gridTemplateColumns = '1fr';
       cont.innerHTML =
         ahora < FECHA_FIN
-          ? '<div class="count-cell" style="padding:22px 28px;"><b>¡ES HOY!</b><span>La fiesta ya empezó 🎃</span></div>'
-          : '<div class="count-cell" style="padding:22px 28px;"><b>FIN</b><span>Nos vemos el próximo año</span></div>';
+          ? '<div class="count-cell" style="padding:22px 28px;">' + t('cd.hoy') + '</div>'
+          : '<div class="count-cell" style="padding:22px 28px;">' + t('cd.fin') + '</div>';
       clearInterval(timer);
       return;
     }
@@ -99,8 +113,8 @@ on('btn-calendario', 'click', (e) => {
    og-image al compartirlo pelón. */
 on('btn-compartir', 'click', async (e) => {
   e.preventDefault();
-  const url = location.origin + '/';
-  const texto = '🎃 Estás invitado a PURO SUSTO — 31 de octubre, Tijuana. Confirma aquí… si te atreves:';
+  const url = location.origin + (idioma() === 'en' ? '/en/' : '/');
+  const texto = t('compartir.texto');
   if (navigator.share) {
     try { await navigator.share({ text: texto, url }); return; } catch (_) { /* cancelado */ }
   } else {
@@ -110,8 +124,9 @@ on('btn-compartir', 'click', async (e) => {
 
 /* ---------------- WhatsApp: juegos y dudas ---------------- */
 function linkWhats(numero, texto) {
-  const t = encodeURIComponent(texto);
-  return numero ? `https://wa.me/${numero}?text=${t}` : `https://wa.me/?text=${t}`;
+  // OJO: no llamar 't' a esta variable — taparía la función t() de i18n.js.
+  const txt = encodeURIComponent(texto);
+  return numero ? `https://wa.me/${numero}?text=${txt}` : `https://wa.me/?text=${txt}`;
 }
 
 /* ---------------- Modal de confirmación ---------------- */
@@ -146,13 +161,14 @@ on('modal-cerrar', 'click', cerrarModal);
 $('modal-rsvp')?.addEventListener('click', (e) => { if (e.target.id === 'modal-rsvp') cerrarModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
 
-(function initWhats() {
+function initWhats() {
   const juego = $('btn-sugerir-juego');
-  if (juego) juego.href = linkWhats(WHATSAPP_JUEGOS, '🎃 PURO SUSTO — propongo un juego para la noche: ');
+  if (juego) juego.href = linkWhats(WHATSAPP_JUEGOS, t('wa.juego'));
 
   const dudas = $('btn-dudas');
-  if (dudas) dudas.href = linkWhats(WHATSAPP_DUDAS, '🎃 Hola, tengo una duda sobre PURO SUSTO: ');
-})();
+  if (dudas) dudas.href = linkWhats(WHATSAPP_DUDAS, t('wa.dudas'));
+}
+initWhats();
 
 /* ---------------- API ---------------- */
 async function apiGet(action) {
@@ -193,19 +209,22 @@ function pintarGastos(gastos, personas) {
 
   if (tbody) {
     tbody.innerHTML =
-      gastos.map((g) => `<tr>
+      gastos.map((g) => {
+        const fijo = String(g.tipo).toUpperCase().startsWith('FIJO');
+        return `<tr>
           <td>${escapeHtml(g.concepto)}</td>
-          <td class="niebla">${String(g.tipo).toUpperCase().startsWith('FIJO') ? 'Fijo · se divide' : 'Por persona'}</td>
-          <td class="num">${mxn(g.monto)}${String(g.tipo).toUpperCase().startsWith('FIJO') ? '' : ' c/u'}</td>
-        </tr>`).join('') +
-      `<tr class="total"><td>Total fijo</td><td></td><td class="num">${mxn(totalFijo)}</td></tr>`;
+          <td class="niebla">${fijo ? t('gastos.fijo') : t('gastos.porPersona')}</td>
+          <td class="num">${mxn(g.monto)}${fijo ? '' : t('gastos.cu')}</td>
+        </tr>`;
+      }).join('') +
+      `<tr class="total"><td>${t('gastos.totalFijo')}</td><td></td><td class="num">${mxn(totalFijo)}</td></tr>`;
   }
 
   const formula = $('cuota-formula');
   if (formula) {
     formula.textContent = personas
-      ? `${mxn(totalFijo)} ÷ ${personas} personas + ${mxn(totalPP)} = ${mxn(totalFijo / personas + totalPP)} por persona`
-      : `${mxn(totalFijo)} ÷ confirmados + ${mxn(totalPP)} por persona`;
+      ? t('cuota.formula', { fijo: mxn(totalFijo), personas, porPersona: mxn(totalPP), cuota: mxnUsd(totalFijo / personas + totalPP) })
+      : t('cuota.formulaVacia', { fijo: mxn(totalFijo), porPersona: mxn(totalPP) });
   }
   return { totalFijo, totalPP };
 }
@@ -224,7 +243,7 @@ function todasLasPersonas(lista) {
 
     const faltan = Number(c.acompanantes || 0) - nombres.length;
     for (let i = 1; i <= faltan; i++) {
-      out.push({ nombre: `Invitado de ${anfitrion}`, invitadoPor: anfitrion });
+      out.push({ nombre: t('conf.invitadoDe', { nombre: anfitrion }), invitadoPor: anfitrion });
     }
   });
   return out;
@@ -237,10 +256,10 @@ function pintarConfirmados(lista) {
     cont.innerHTML = personas.length
       ? personas.map((p) =>
           p.invitadoPor
-            ? `<span class="chip niebla" title="Invitado por ${escapeHtml(p.invitadoPor)}">${escapeHtml(p.nombre)}</span>`
+            ? `<span class="chip niebla" title="${escapeHtml(t('conf.invitadoPor', { nombre: p.invitadoPor }))}">${escapeHtml(p.nombre)}</span>`
             : `<span class="chip">${escapeHtml(p.nombre)}</span>`
         ).join('')
-      : '<span class="chip niebla">Aún no cae nadie… sé el primero 🩸</span>';
+      : `<span class="chip niebla">${escapeHtml(t('conf.vacio'))}</span>`;
   }
   return personas.length;
 }
@@ -271,13 +290,14 @@ async function cargarDatos() {
       const { totalFijo, totalPP } = pintarGastos(listaGastos.length ? listaGastos : FALLBACK_GASTOS, personas);
       const cuotaApi = Number(cuota?.cuota || 0);
       const cuotaCalc = personas ? totalFijo / personas + totalPP : 0;
-      setText('stat-cuota', cuotaApi ? mxn(cuotaApi) : personas ? mxn(cuotaCalc) : '—');
+      setText('stat-cuota', cuotaApi ? mxnUsd(cuotaApi) : personas ? mxnUsd(cuotaCalc) : '—');
       const boteVal = Number(bote?.bote || 0);
-      setText('stat-bote', boteVal ? mxn(boteVal) : '$0');
+      setText('stat-bote', boteVal ? mxnUsd(boteVal) : mxn(0));
     }
   }
 
   const cfg = config || {};
+  if (Number(cfg.usd_rate) > 0) TIPO_CAMBIO_USD = Number(cfg.usd_rate);
   const jamUrl = JAM_URL_MANUAL || cfg.jam_url || '';
   if (jamUrl && $('btn-jam')) {
     $('btn-jam').href = jamUrl;
@@ -307,9 +327,9 @@ function sincronizarSinDisfraz() {
   if (!sel) return;
   const max = 1 + Number($('f-acomp')?.value || 0);
   const previo = Number(sel.value || 0);
-  const opts = ['<option value="0">Nadie — todos disfrazados 🎃</option>'];
+  const opts = [`<option value="0">${escapeHtml(t('rsvp.sindisfraz.0'))}</option>`];
   for (let i = 1; i <= max; i++) {
-    opts.push(`<option value="${i}">${i} sin disfraz (+${mxn(i * 200)})</option>`);
+    opts.push(`<option value="${i}">${escapeHtml(t('rsvp.sindisfraz.n', { n: i, monto: mxn(i * 200) }))}</option>`);
   }
   sel.innerHTML = opts.join('');
   sel.value = String(Math.min(previo, max));
@@ -329,9 +349,9 @@ function sincronizarNombresAcomp() {
   let html = '';
   for (let i = 1; i <= n; i++) {
     html +=
-      `<label for="f-acomp-${i}">Nombre del acompañante ${i}</label>` +
+      `<label for="f-acomp-${i}">${escapeHtml(t('rsvp.acompNombre', { n: i }))}</label>` +
       `<input type="text" id="f-acomp-${i}" class="acomp-nombre" maxlength="60"` +
-      ` placeholder="Nombre y apellido" required value="${escapeHtml(previos[i - 1] || '')}">`;
+      ` placeholder="${escapeHtml(t('rsvp.acompNombre.ph'))}" required value="${escapeHtml(previos[i - 1] || '')}">`;
   }
   box.innerHTML = html;
 }
@@ -361,7 +381,7 @@ on('form-rsvp', 'submit', async (e) => {
   }
 
   btn.disabled = true;
-  btn.textContent = 'Invocando…';
+  btn.textContent = t('rsvp.enviando');
   const payload = {
     action: 'rsvp',
     nombre: $('f-nombre').value.trim(),
@@ -372,11 +392,11 @@ on('form-rsvp', 'submit', async (e) => {
   };
   const res = await apiPost(payload);
   btn.disabled = false;
-  btn.textContent = '¡Voy!';
+  btn.textContent = t('rsvp.boton');
 
   if (!res) {
     msg.className = 'form-msg error';
-    msg.textContent = 'Algo salió mal en el inframundo. Intenta de nuevo o confirma por WhatsApp.';
+    msg.textContent = t('rsvp.errorRed');
     return;
   }
   const esNuevo = !(res.status === 'duplicado' || res.duplicado) && (res.ok || res.status === 'nuevo');
@@ -385,26 +405,25 @@ on('form-rsvp', 'submit', async (e) => {
     const nombre = escapeHtml(payload.nombre);
 
     const bloqueDisfraz = payload.sin_disfraz
-      ? `<p class="niebla mt-1" style="font-size:15px;">Anotamos ${payload.sin_disfraz} sin disfraz: +${mxn(payload.sin_disfraz * 200)} al premio. 😈</p>`
+      ? `<p class="niebla mt-1" style="font-size:15px;">${t('modal.disfraz', { n: payload.sin_disfraz, monto: mxn(payload.sin_disfraz * 200) })}</p>`
       : '';
 
     /* Acaba de decir que sí: es el mejor momento para pedirle algo.
        Sugerir un juego es lo ÚNICO que puede hacer hoy — el Jam, el álbum
        y la votación no despiertan hasta el 31. */
-    const urlJuego = linkWhats(WHATSAPP_JUEGOS, `🎃 PURO SUSTO — soy ${payload.nombre} y propongo este juego para la noche: `);
+    const urlJuego = linkWhats(WHATSAPP_JUEGOS, t('wa.juegoNombre', { nombre: payload.nombre }));
     const bloqueJuego =
-      `<div class="mt-3"><p class="niebla" style="font-size:15px;">Ya que estás: ¿tienes un juego que nunca falla?</p>` +
-      `<a class="btn btn-rojo mt-1" href="${urlJuego}" target="_blank" rel="noopener">Propón un juego</a></div>`;
+      `<div class="mt-3"><p class="niebla" style="font-size:15px;">${t('modal.juegoPregunta')}</p>` +
+      `<a class="btn btn-rojo mt-1" href="${urlJuego}" target="_blank" rel="noopener">${t('modal.juegoBoton')}</a></div>`;
 
-    const urlCorregir = linkWhats(WHATSAPP_DUDAS, `🎃 PURO SUSTO — soy ${payload.nombre} y necesito corregir mi confirmación: `);
+    const urlCorregir = linkWhats(WHATSAPP_DUDAS, t('wa.corregir', { nombre: payload.nombre }));
     const bloqueCorregir =
-      `<p class="niebla mt-3" style="font-size:14px;">¿Te equivocaste en algo? ` +
-      `<a href="${urlCorregir}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> y lo corregimos.</p>`;
+      `<p class="niebla mt-3" style="font-size:14px;">${t('modal.corregir', { url: urlCorregir })}</p>`;
 
     const encabezado = esNuevo
-      ? `<p><b>${nombre}</b>, ya estás en la lista.</p>
-         <p class="niebla mt-1" style="font-size:15px;">Te escribimos por WhatsApp para coordinar el pago.</p>`
-      : `<p><b>${nombre}</b>, ya estabas en la lista — el susto no se duplica.</p>`;
+      ? `<p>${t('modal.enLista', { nombre })}</p>` +
+        `<p class="niebla mt-1" style="font-size:15px;">${t('modal.pago')}</p>`
+      : `<p>${t('modal.yaEstabas', { nombre })}</p>`;
 
     const cuerpo =
       `<div><span class="badge-vas">¡Vas!</span></div>` +
@@ -412,7 +431,7 @@ on('form-rsvp', 'submit', async (e) => {
       bloqueDisfraz + bloqueJuego + bloqueCorregir;
 
     // Si por lo que sea no existe el modal, no dejamos al invitado sin respuesta.
-    if (!abrirModal(esNuevo ? '¡Caíste!' : 'Ya estabas', cuerpo)) {
+    if (!abrirModal(t(esNuevo ? 'modal.nuevo' : 'modal.dup'), cuerpo)) {
       msg.innerHTML = cuerpo;
       msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -425,7 +444,7 @@ on('form-rsvp', 'submit', async (e) => {
     }
   } else {
     msg.className = 'form-msg error';
-    msg.textContent = res.error || 'No se pudo confirmar. Intenta de nuevo.';
+    msg.textContent = res.error || t('rsvp.errorGeneral');
   }
 });
 
@@ -442,11 +461,11 @@ function despertarVotacion() {
   cont.innerHTML = CATEGORIAS_VOTO.map(
     (cat) => `
     <div class="categoria-voto" data-cat="${cat.id}">
-      <h3 style="font-size:20px;">${cat.nombre}</h3>
+      <h3 style="font-size:20px;">${t(cat.clave)}</h3>
       <div class="candidatos">
         ${candidatos
           .map((p) => `<button type="button" class="candidato" data-nombre="${escapeHtml(p.nombre)}">${escapeHtml(p.nombre)}</button>`)
-          .join('') || '<span class="niebla">Sin confirmados para votar</span>'}
+          .join('') || `<span class="niebla">${escapeHtml(t('prem.sinCandidatos'))}</span>`}
       </div>
     </div>`
   ).join('');
@@ -467,7 +486,7 @@ on('btn-votar', 'click', async () => {
   const votante = $('v-votante').value.trim();
   if (!votante) {
     msg.className = 'form-msg error';
-    msg.textContent = 'Pon tu nombre para votar.';
+    msg.textContent = t('prem.faltaNombre');
     return;
   }
   const votos = [];
@@ -477,7 +496,7 @@ on('btn-votar', 'click', async () => {
   });
   if (!votos.length) {
     msg.className = 'form-msg error';
-    msg.textContent = 'Elige al menos un candidato.';
+    msg.textContent = t('prem.eligeUno');
     return;
   }
   $('btn-votar').disabled = true;
@@ -487,10 +506,18 @@ on('btn-votar', 'click', async () => {
     if (res && (res.ok || res.status === 'ok')) oks++;
   }
   $('btn-votar').disabled = false;
-  msg.innerHTML = oks
-    ? `${oks} voto(s) registrados. <span class="badge-vas">Contado</span>`
-    : 'No se registraron votos (¿ya habías votado?).';
+  msg.innerHTML = oks ? t('prem.votosOk', { n: oks }) : t('prem.votosNo');
 });
 
 /* ---------------- Arranque ---------------- */
+/* i18n.js repinta el HTML estático; aquí repintamos lo que arma el JS. */
+document.addEventListener('idioma-cambiado', () => {
+  initWhats();
+  sincronizarNombresAcomp();
+  sincronizarSinDisfraz();
+  const btn = $('btn-rsvp');
+  if (btn && !btn.disabled) btn.textContent = t('rsvp.boton');
+  cargarDatos();
+});
+
 cargarDatos();
