@@ -7,8 +7,13 @@
 /* ---------------- CONFIGURACIÓN ---------------- */
 const API_URL = 'https://script.google.com/macros/s/AKfycbwyaHDTp_BWN_48Pk7bFielSHAAa3QLQ1nwT5T9lZuwkPMQD-zVzx-iF4N5Jy_L24GfYw/exec';
 
-/* WhatsApp de los anfitriones (solo dígitos con lada, ej. '526641234567') */
-const WHATSAPP_ANFITRIONES = '';
+/* WhatsApp de los anfitriones (solo dígitos con lada, ej. '526641234567').
+   Cada botón va a quien le toca, para que nadie se sature:
+     · DUDAS  → dinero y logística (cuánto pago, cómo lo mando, llevo a alguien)
+     · JUEGOS → sugerencias para la noche, puro tema divertido
+   Si alguno queda vacío, el botón abre WhatsApp sin destinatario. */
+const WHATSAPP_DUDAS  = '526631077285'; // Sandy
+const WHATSAPP_JUEGOS = '525518103139'; // Pau
 
 /* Si se llenan aquí, ganan sobre la pestaña Config (jam_url / album_url) */
 const JAM_URL_MANUAL = '';
@@ -104,17 +109,17 @@ on('btn-compartir', 'click', async (e) => {
 });
 
 /* ---------------- WhatsApp: juegos y dudas ---------------- */
+function linkWhats(numero, texto) {
+  const t = encodeURIComponent(texto);
+  return numero ? `https://wa.me/${numero}?text=${t}` : `https://wa.me/?text=${t}`;
+}
+
 (function initWhats() {
   const juego = $('btn-sugerir-juego');
-  if (juego) {
-    const t = encodeURIComponent('🎃 PURO SUSTO — propongo un juego para la noche: ');
-    juego.href = WHATSAPP_ANFITRIONES ? `https://wa.me/${WHATSAPP_ANFITRIONES}?text=${t}` : `https://wa.me/?text=${t}`;
-  }
+  if (juego) juego.href = linkWhats(WHATSAPP_JUEGOS, '🎃 PURO SUSTO — propongo un juego para la noche: ');
+
   const dudas = $('btn-dudas');
-  if (dudas) {
-    const t = encodeURIComponent('🎃 Hola, tengo una duda sobre PURO SUSTO: ');
-    dudas.href = WHATSAPP_ANFITRIONES ? `https://wa.me/${WHATSAPP_ANFITRIONES}?text=${t}` : `https://wa.me/?text=${t}`;
-  }
+  if (dudas) dudas.href = linkWhats(WHATSAPP_DUDAS, '🎃 Hola, tengo una duda sobre PURO SUSTO: ');
 })();
 
 /* ---------------- API ---------------- */
@@ -348,7 +353,8 @@ on('form-rsvp', 'submit', async (e) => {
     const notaDisfraz = payload.sin_disfraz
       ? `<br><span class="niebla" style="font-size:15px;">Anotamos ${payload.sin_disfraz} sin disfraz: +${'$' + (payload.sin_disfraz * 200).toLocaleString('es-MX')} al premio. 😈</span>`
       : '';
-    const notaError = '<br><span class="niebla" style="font-size:15px;">¿Te equivocaste en algo? Escríbenos por WhatsApp y lo corregimos.</span>';
+    const urlCorregir = linkWhats(WHATSAPP_DUDAS, `🎃 PURO SUSTO — soy ${payload.nombre} y necesito corregir mi confirmación: `);
+    const notaError = `<br><span class="niebla" style="font-size:15px;">¿Te equivocaste en algo? <a href="${urlCorregir}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> y lo corregimos.</span>`;
     msg.innerHTML = `Listo, ${escapeHtml(payload.nombre)}. Te escribimos por WhatsApp para el pago. <span class="badge-vas">¡Vas!</span>${notaDisfraz}${notaError}`;
     $('form-rsvp').reset();
     sincronizarNombresAcomp();
