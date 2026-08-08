@@ -189,6 +189,44 @@ function initWhats() {
 }
 initWhats();
 
+/* ---------------- Menú móvil ----------------
+   nav.links se oculta abajo de 720px. Clonamos esos mismos enlaces en un
+   panel de pantalla completa: así el menú nunca se desincroniza del de
+   escritorio y los data-i18n viajan con la copia (i18n.js los repinta). */
+(function menuMovil() {
+  const barra = document.querySelector('.nav-inner');
+  const links = document.querySelector('nav.links');
+  if (!barra || !links || barra.querySelector('.nav-toggle')) return;
+
+  const boton = document.createElement('button');
+  boton.type = 'button';
+  boton.className = 'nav-toggle';
+  boton.setAttribute('aria-label', 'Menú');
+  boton.setAttribute('aria-expanded', 'false');
+  boton.innerHTML = '<span></span><span></span><span></span>';
+  barra.appendChild(boton);
+
+  const panel = document.createElement('nav');
+  panel.className = 'menu-movil hidden';
+  panel.id = 'menu-movil';
+  links.querySelectorAll('a').forEach((a) => panel.appendChild(a.cloneNode(true)));
+  document.body.appendChild(panel);
+
+  const abrir = (si) => {
+    panel.classList.toggle('hidden', !si);
+    boton.setAttribute('aria-expanded', String(si));
+    document.body.style.overflow = si ? 'hidden' : '';
+  };
+
+  boton.addEventListener('click', () => abrir(panel.classList.contains('hidden')));
+  // Al elegir una sección, cerrar: si es un ancla de esta misma página no
+  // hay recarga y el panel se quedaría tapando todo.
+  panel.addEventListener('click', (e) => { if (e.target.closest('a')) abrir(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') abrir(false); });
+  // Si gira el teléfono o crece la ventana, el menú de escritorio reaparece.
+  window.addEventListener('resize', () => { if (window.innerWidth > 720) abrir(false); });
+})();
+
 /* ---------------- API ---------------- */
 async function apiGet(action) {
   if (!API_URL) return null;

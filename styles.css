@@ -432,3 +432,49 @@ footer p { color: var(--niebla); font-size: 15px; margin-top: 10px; }
   letter-spacing: 0;
   color: var(--niebla);
 }
+
+/* ---------- Menú móvil ----------
+   nav.links se oculta abajo de 720px, y hasta ahora no había reemplazo:
+   en celular no se podía navegar a ninguna sección. */
+.nav-toggle {
+  display: none;
+  background: none; border: none; cursor: pointer;
+  padding: 10px 6px; margin-left: 4px;
+  flex-direction: column; gap: 5px;
+}
+.nav-toggle span {
+  display: block; width: 24px; height: 2px;
+  background: var(--hueso); border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.menu-movil {
+  position: fixed; inset: 0; z-index: 800;
+  background: var(--negro-abismo);   /* opaco: translúcido dejaba leer la portada */
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px; padding: 90px 24px 40px;
+}
+/* Space Grotesk, no Creepster: el brand kit reserva la display para logo y
+   H1/H2, y para navegar pesa más la legibilidad. */
+.menu-movil a {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: clamp(24px, 6.5vw, 32px);
+  letter-spacing: 1px;
+  color: var(--hueso); text-decoration: none;
+  padding: 16px 10px; text-align: center;
+}
+.menu-movil a:active { color: var(--rojo-sangre); }
+
+/* El header tiene que quedar ARRIBA del overlay o la ✕ no se puede tocar
+   (y en celular no hay tecla Esc para salir). */
+header.nav { z-index: 850; }
+
+@media (max-width: 720px) {
+  .nav-toggle { display: flex; }
+  .lang-toggle { margin-left: auto; }
+}
