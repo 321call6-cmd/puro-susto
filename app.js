@@ -355,7 +355,15 @@ on('form-rsvp', 'submit', async (e) => {
       : '';
     const urlCorregir = linkWhats(WHATSAPP_DUDAS, `🎃 PURO SUSTO — soy ${payload.nombre} y necesito corregir mi confirmación: `);
     const notaError = `<br><span class="niebla" style="font-size:15px;">¿Te equivocaste en algo? <a href="${urlCorregir}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> y lo corregimos.</span>`;
-    msg.innerHTML = `Listo, ${escapeHtml(payload.nombre)}. Te escribimos por WhatsApp para el pago. <span class="badge-vas">¡Vas!</span>${notaDisfraz}${notaError}`;
+
+    /* Acaba de decir que sí: es el mejor momento para pedirle algo.
+       Sugerir un juego es lo ÚNICO que puede hacer hoy — el Jam, el álbum
+       y la votación no despiertan hasta el 31. */
+    const urlJuego = linkWhats(WHATSAPP_JUEGOS, `🎃 PURO SUSTO — soy ${payload.nombre} y propongo este juego para la noche: `);
+    const ctaJuego =
+      `<div class="mt-2"><span class="niebla" style="font-size:15px;">Ya que estás: ¿tienes un juego que nunca falla?</span><br>` +
+      `<a class="btn btn-fantasma mt-1" href="${urlJuego}" target="_blank" rel="noopener">Propón un juego</a></div>`;
+    msg.innerHTML = `Listo, ${escapeHtml(payload.nombre)}. Te escribimos por WhatsApp para el pago. <span class="badge-vas">¡Vas!</span>${notaDisfraz}${ctaJuego}${notaError}`;
     $('form-rsvp').reset();
     sincronizarNombresAcomp();
     sincronizarSinDisfraz();
