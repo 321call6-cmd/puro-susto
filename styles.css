@@ -421,3 +421,14 @@ footer p { color: var(--niebla); font-size: 15px; margin-top: 10px; }
 .lang-toggle button:hover { color: var(--hueso); }
 .lang-toggle button[aria-current="true"] { color: var(--rojo-sangre); }
 .lang-toggle span { color: #26262c; }
+
+/* El aproximado en dólares, debajo del monto grande del tile.
+   En la misma línea desbordaba el recuadro en inglés. */
+.stat b small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.4em;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--niebla);
+}

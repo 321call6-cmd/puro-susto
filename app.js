@@ -48,6 +48,25 @@ let TIPO_CAMBIO_USD = 17;
    dos mil dólares y se le va la sangre de la cara. */
 const mxn = (n) => '$' + Math.ceil(n).toLocaleString('es-MX') + ' MXN';
 
+/* Sin sufijo: para la tabla de gastos, donde el encabezado ya dice "(MXN)".
+   Repetir MXN en cada celda partía los montos en dos renglones. */
+const mxnCorto = (n) => '$' + Math.ceil(n).toLocaleString('es-MX');
+
+/* Solo el aproximado en dólares, o '' si no aplica. */
+function usdAprox(n) {
+  if (idioma() !== 'en' || !TIPO_CAMBIO_USD) return '';
+  return '≈US$' + Math.round(Number(n) / TIPO_CAMBIO_USD).toLocaleString('en-US');
+}
+
+/* Pinta un tile: el monto grande y, debajo y en chico, el aproximado en USD.
+   Meterlo en la misma línea desbordaba el recuadro en inglés. */
+function pintarStat(id, monto) {
+  const el = $(id);
+  if (!el) return;
+  const usd = usdAprox(monto);
+  el.innerHTML = escapeHtml(mxn(monto)) + (usd ? `<small>${escapeHtml(usd)}</small>` : '');
+}
+
 /* Igual que mxn(), pero en inglés agrega el aproximado en dólares.
    Solo para los números grandes (cuota y premio) — en la tabla sería ruido. */
 function mxnUsd(n) {
@@ -214,10 +233,10 @@ function pintarGastos(gastos, personas) {
         return `<tr>
           <td>${escapeHtml(g.concepto)}</td>
           <td class="niebla">${fijo ? t('gastos.fijo') : t('gastos.porPersona')}</td>
-          <td class="num">${mxn(g.monto)}${fijo ? '' : t('gastos.cu')}</td>
+          <td class="num">${mxnCorto(g.monto)}${fijo ? '' : t('gastos.cu')}</td>
         </tr>`;
       }).join('') +
-      `<tr class="total"><td>${t('gastos.totalFijo')}</td><td></td><td class="num">${mxn(totalFijo)}</td></tr>`;
+      `<tr class="total"><td>${t('gastos.totalFijo')}</td><td></td><td class="num">${mxnCorto(totalFijo)}</td></tr>`;
   }
 
   const formula = $('cuota-formula');
@@ -290,9 +309,9 @@ async function cargarDatos() {
       const { totalFijo, totalPP } = pintarGastos(listaGastos.length ? listaGastos : FALLBACK_GASTOS, personas);
       const cuotaApi = Number(cuota?.cuota || 0);
       const cuotaCalc = personas ? totalFijo / personas + totalPP : 0;
-      setText('stat-cuota', cuotaApi ? mxnUsd(cuotaApi) : personas ? mxnUsd(cuotaCalc) : '—');
-      const boteVal = Number(bote?.bote || 0);
-      setText('stat-bote', boteVal ? mxnUsd(boteVal) : mxn(0));
+      const cuotaMostrar = cuotaApi || (personas ? cuotaCalc : 0);
+      if (cuotaMostrar) pintarStat('stat-cuota', cuotaMostrar); else setText('stat-cuota', '—');
+      pintarStat('stat-bote', Number(bote?.bote || 0));
     }
   }
 
