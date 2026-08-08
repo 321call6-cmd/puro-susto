@@ -121,7 +121,14 @@ function abrirModal(titulo, cuerpoHtml) {
   setText('modal-titulo', titulo);
   $('modal-cuerpo').innerHTML = cuerpoHtml;
   modal.classList.remove('hidden');
-  document.body.style.overflow = 'hidden'; // que no se scrollee la página de atrás
+
+  /* Bloquea el scroll del fondo. En desktop, quitar la barra de scroll ensancha
+     la página y todo brinca a la derecha: se compensa con un padding del mismo
+     ancho que la barra. En móvil la barra es flotante y esto vale 0. */
+  const anchoBarra = window.innerWidth - document.documentElement.clientWidth;
+  document.body.style.overflow = 'hidden';
+  if (anchoBarra > 0) document.body.style.paddingRight = anchoBarra + 'px';
+
   $('modal-cerrar')?.focus();
   return true;
 }
@@ -131,6 +138,7 @@ function cerrarModal() {
   if (!modal || modal.classList.contains('hidden')) return;
   modal.classList.add('hidden');
   document.body.style.overflow = '';
+  document.body.style.paddingRight = '';
 }
 
 on('modal-cerrar', 'click', cerrarModal);
