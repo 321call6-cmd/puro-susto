@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 
@@ -107,6 +107,48 @@
   </div>
 </section>
 
+<!-- ==================== EL GANCHO ====================
+     Va pegado al hero, antes que cualquier otra cosa: es el primer bloque
+     que ve quien entra.
+
+     La primera versión vendía el ahorro ("entre más seamos, menos pagas").
+     Estaba mal calibrada: a este grupo no le duele la cuota, y hablarles de
+     dinero hacía sonar la fiesta a vaquita. Lo que sí mueve es la gloria —
+     ganar el concurso — y un premio que se acumula con cada quien que cae.
+     La cuota sigue a la vista, pero en chico: la gente tiene derecho a saber
+     a qué le dice que sí, solo que ya no es el argumento. -->
+<section id="gancho" class="gancho">
+  <svg class="monster-bg" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calabaza"/></svg>
+  <div class="wrap">
+    <span class="gancho-kicker" data-i18n="gancho.kicker">Truco o trato</span>
+    <h2 class="gancho-titulo" data-i18n="gancho.titulo">El mejor disfraz se lleva el premio</h2>
+    <p class="gancho-sub" data-i18n-html="gancho.sub"></p>
+
+    <div class="gancho-premio">
+      <span class="gancho-premio-label" data-i18n="gancho.premioLabel">El premio se acumula</span>
+      <span class="gancho-flecha" aria-hidden="true">↑</span>
+      <b class="gancho-monto" id="gancho-premio">—</b>
+      <span class="gancho-premio-pie" id="gancho-premio-pie"></span>
+    </div>
+
+    <div class="gancho-barra-bloque">
+      <div class="gancho-barra-etiquetas">
+        <span id="gancho-somos">—</span>
+        <span class="niebla" id="gancho-meta">—</span>
+      </div>
+      <!-- La barra es sangre llenándose: gotea en la punta que avanza -->
+      <div class="gancho-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="gancho-barra">
+        <div class="gancho-barra-relleno sin-sangre" id="gancho-barra-relleno"></div>
+      </div>
+      <p class="gancho-proyeccion" id="gancho-proyeccion"></p>
+    </div>
+
+    <div class="gancho-cierre" id="gancho-cierre"></div>
+
+    <a class="btn btn-rojo btn-gigante" href="#asistencia" id="gancho-cta" data-i18n="gancho.cta">Regístrate y prepara tu disfraz 😈</a>
+  </div>
+</section>
+
 <!-- ==================== RSVP ==================== -->
 <section id="asistencia">
   <svg class="monster-bg" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calavera"/></svg>
@@ -120,39 +162,58 @@
     </div>
 
     <div class="card" style="max-width: 560px;">
+      <!-- Una fila = una persona que paga. Se quitó el selector de
+           acompañantes: de ahí nacían los duplicados (alguien se registraba
+           y además lo registraba otro como acompañante). -->
+      <p class="aviso-solo-tu" data-i18n-html="rsvp.soloTu"></p>
+
       <form id="form-rsvp">
         <label for="f-nombre" data-i18n="rsvp.nombre">Tu nombre completo</label>
         <input type="text" id="f-nombre" data-i18n-ph="rsvp.nombre.ph" placeholder="Tu nombre, si te atreves…" required maxlength="60" autocomplete="name">
+        <!-- app.js avisa aquí si ese nombre ya está en la lista en vivo -->
+        <p class="aviso-dup hidden" id="aviso-dup" role="status"></p>
 
         <label for="f-whats" data-i18n="rsvp.whats">Tu WhatsApp (no se publica)</label>
         <input type="tel" id="f-whats" data-i18n-ph="rsvp.whats.ph" placeholder="664 123 4567" required maxlength="20" autocomplete="tel">
 
-        <label for="f-acomp" data-i18n="rsvp.acomp">¿Cuántos acompañantes traes?</label>
-        <select id="f-acomp">
-          <option value="0" selected data-i18n="rsvp.acomp.0">Voy solo/a</option>
-          <option value="1" data-i18n="rsvp.acomp.1">+1 acompañante</option>
-          <option value="2">+2 acompañantes</option>
-          <option value="3">+3 acompañantes</option>
-          <option value="4">+4 acompañantes</option>
+        <label for="f-disfraz" data-i18n="rsvp.disfraz">¿Vas disfrazado/a?</label>
+        <select id="f-disfraz">
+          <option value="0" selected data-i18n="rsvp.disfraz.si">Sí, obvio 🎃</option>
+          <option value="1" data-i18n="rsvp.disfraz.no">No — le meto $200 MXN al premio 😈</option>
         </select>
 
-        <!-- app.js genera un campo por acompañante según el número elegido arriba -->
-        <div id="acomp-nombres-box" class="hidden"></div>
+        <!-- Los peques van escondidos a propósito: el camino fácil es
+             registrarse solo. Quien de verdad trae niños da un clic extra. -->
+        <button type="button" class="link-peques" id="btn-peques" data-i18n="rsvp.peques.abrir">+ Traigo peques que no pagan</button>
 
-        <label for="f-sindisfraz" data-i18n="rsvp.sindisfraz">¿Alguien de tu grupo irá sin disfraz?</label>
-        <!-- app.js regenera estas opciones según el tamaño del grupo (tú + acompañantes) -->
-        <select id="f-sindisfraz">
-          <option value="0" selected>Nadie — todos disfrazados 🎃</option>
-          <option value="1">1 sin disfraz (+$200)</option>
-        </select>
+        <div id="peques-box" class="hidden peques-box">
+          <p class="niebla" style="font-size:14px;" data-i18n-html="rsvp.peques.nota"></p>
+          <label for="f-peques" data-i18n="rsvp.peques.cuantos">¿Cuántos peques traes?</label>
+          <select id="f-peques">
+            <option value="0" selected>0</option>
+            <option value="1">1 peque</option>
+            <option value="2">2 peques</option>
+            <option value="3">3 peques</option>
+            <option value="4">4 peques</option>
+          </select>
+          <!-- app.js genera un campo por peque según el número elegido -->
+          <div id="peques-nombres-box"></div>
+        </div>
 
-        <p class="niebla" style="font-size:14px; margin-top:10px;" data-i18n-html="rsvp.bebidas"></p>
+        <p class="niebla" style="font-size:14px; margin-top:14px;" data-i18n-html="rsvp.bebidas"></p>
 
         <div class="mt-2">
           <button type="submit" class="btn btn-rojo" id="btn-rsvp" data-i18n="rsvp.boton">¡Voy!</button>
         </div>
         <div class="form-msg" id="rsvp-msg" role="status"></div>
       </form>
+
+      <!-- Se muestra en lugar del formulario a partir del 29 de octubre -->
+      <div class="hidden" id="rsvp-cerrado">
+        <h3 data-i18n="rsvp.cerradoTitulo">El registro cerró</h3>
+        <p class="niebla mt-1" style="font-size:16px;" data-i18n-html="rsvp.cerradoCuerpo"></p>
+        <a class="btn btn-fantasma mt-2" id="btn-tarde" href="#" target="_blank" rel="noopener" data-i18n="rsvp.cerradoBoton">Escribirle a Sandy</a>
+      </div>
     </div>
   </div>
 </section>
@@ -179,14 +240,17 @@
     </div>
 
     <div class="stats-row">
-      <div class="stat stat-rojo"><b id="stat-personas">—</b><span data-i18n="conf.personas">personas confirmadas</span></div>
+      <div class="stat stat-rojo"><b id="stat-personas">—</b><span data-i18n="conf.personas">personas que pagan</span></div>
       <div class="stat"><b id="stat-cuota">—</b><span data-i18n="conf.cuota">cuota por persona (en vivo)</span></div>
       <div class="stat"><b id="stat-bote">—</b><span data-i18n="conf.bote">premio al mejor disfraz 💰</span></div>
     </div>
 
+    <!-- Lápidas: una por persona. app.js las arma y les asigna monstruo. -->
     <div class="lista-confirmados" id="lista-confirmados">
-      <span class="chip niebla" data-i18n="conf.cargando">Cargando la lista…</span>
+      <span class="niebla" data-i18n="conf.cargando">Cargando la lista…</span>
     </div>
+
+    <p class="lista-pie niebla" id="lista-pie"></p>
   </div>
 </section>
 
@@ -257,7 +321,7 @@
   <p style="font-size: 13px;" data-i18n-html="pie.links"></p>
 </footer>
 
-<script src="i18n.js?v=2"></script>
-<script src="app.js?v=14"></script>
+<script src="i18n.js?v=3"></script>
+<script src="app.js?v=15"></script>
 </body>
 </html>
