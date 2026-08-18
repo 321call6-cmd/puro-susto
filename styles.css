@@ -407,7 +407,7 @@ nav.links a:hover { color: var(--hueso); }
    Estuvo arriba y .btn le ganaba el tamaño: el "gigante" salía normalito. */
 /* Botones de servicio del hero. Igual que .btn-gigante: va DESPUÉS de .btn
    o .btn le gana el tamaño y el "chico" sale del tamaño normal. */
-.btn-chico { font-size: 16px; padding: 11px 22px; }
+.btn-chico { font-size: 16px; padding: 11px 16px; }
 
 .btn-gigante {
   margin-top: 26px;
