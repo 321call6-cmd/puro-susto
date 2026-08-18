@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=12">
+  <link rel="stylesheet" href="styles.css?v=14">
   <style>
     .reco { margin-bottom: 20px; }
     .reco pre {
@@ -32,7 +32,26 @@
   <div class="wrap">
     <h2>Mensajes para WhatsApp</h2>
     <p class="niebla" style="margin-bottom: 14px;">Copia y pega en el grupo o por privado. <b style="color:var(--hueso)">Los datos de pago se mandan aparte, por privado — nunca en el sitio ni en mensajes masivos.</b> Reemplaza puro-susto.pages.dev por el dominio real.</p>
-    <p class="niebla" style="margin-bottom: 28px;"><b style="color:var(--hueso)">El link ES la invitación:</b> mándalo pelón (sin adjuntar imagen) y WhatsApp genera solo la tarjeta con el cartel, el título y el "¿te atreves?". El link lleva directo al botón de confirmar.</p>
+    <p class="niebla" style="margin-bottom: 28px;"><b style="color:var(--hueso)">El link ES la invitación:</b> mándalo pelón (sin adjuntar imagen) y WhatsApp genera solo la tarjeta con el cartel. En inglés usa <b style="color:var(--hueso)">puro-susto.pages.dev/en/</b>, que trae su propia tarjeta.</p>
+    <p class="niebla" style="margin-bottom: 28px; border-left: 3px solid var(--rojo-sangre); padding-left: 14px;"><b style="color:var(--hueso)">Lo que más se te va a olvidar decir:</b> ahora <b style="color:var(--hueso)">cada quien se registra por su cuenta</b>. Antes se podían apuntar acompañantes y de ahí salió gente contada doble. Si tú apuntas a alguien, las cuentas se descuadran.</p>
+
+    <div class="card reco">
+      <h3>0 · La invitación (el primer mensaje)</h3>
+      <pre id="r0">🎃 Estás invitado a PURO SUSTO
+
+📅 Sábado 31 de octubre · 6 PM – 1 AM
+📍 Salón Castilla, Blvd. Viñas del Mar, Tijuana
+🧛 Disfraz obligatorio
+
+El mejor disfraz se lleva el premio en efectivo — y el premio se acumula con cada quien que se registra.
+
+👉 Regístrate aquí: https://puro-susto.pages.dev
+
+⚠️ Ojo: cada quien se registra por su cuenta. Si vienes con alguien, pásale el link y que se apunte solo. Los niños chiquitos entran gratis (a esos sí los apuntas tú).
+
+⏳ El registro se cierra el miércoles 28 de octubre.</pre>
+      <button class="btn btn-rojo" onclick="copiar('r0', this)">Copiar</button>
+    </div>
 
     <div class="card reco">
       <h3>1 · Al confirmar (privado)</h3>
@@ -50,22 +69,22 @@ Ahorita te paso los datos de pago por aquí. 🩸
     </div>
 
     <div class="card reco">
-      <h3>2 · Una semana antes (grupo)</h3>
-      <pre id="r2">☠️ FALTA UNA SEMANA para PURO SUSTO ☠️
+      <h3>2 · Últimos días para registrarse (grupo · 25–28 oct)</h3>
+      <pre id="r2">⏳ ÚLTIMA LLAMADA para registrarse a PURO SUSTO
 
-📅 Sábado 31 de octubre · 6 PM
-📍 Salón Castilla, Blvd. Viñas del Mar
+El registro se cierra el MIÉRCOLES 28 a medianoche. Después de eso hay que encargar la comida con número cerrado y ya no entra nadie.
 
-✅ Checa la cuota en vivo y la lista de confirmados: https://puro-susto.pages.dev
-🧟 ¿Ya tienes disfraz? Recuerda: sin disfraz pagas $200 al premio.
-🏆 Hay 6 trofeos esqueleto en juego. Se vota por celular esa noche.
+🏆 El premio al mejor disfraz va en $[MONTO] ahorita — y sube con cada quien que se registra.
+🧟 Sin disfraz son $200 que también se van al premio.
 
-Si aún no confirmas, hazlo ya — entre más seamos, más barata la cuota: https://puro-susto.pages.dev</pre>
+👉 https://puro-susto.pages.dev
+
+Cada quien se apunta solo. Si le pasaste el link a alguien, pregúntale si ya lo hizo. 🩸</pre>
       <button class="btn btn-rojo" onclick="copiar('r2', this)">Copiar</button>
     </div>
 
     <div class="card reco">
-      <h3>3 · Un día antes (grupo)</h3>
+      <h3>3 · Un día antes de la fiesta (grupo)</h3>
       <pre id="r3">🔪 MAÑANA ES PURO SUSTO 🔪
 
 📅 Sábado 31 · desde las 6 PM

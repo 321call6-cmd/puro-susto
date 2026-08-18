@@ -179,6 +179,7 @@ nav.links a:hover { color: var(--hueso); }
 }
 .hero .meta {
   margin-top: 26px; font-size: 19px; color: var(--hueso); font-weight: 500;
+  text-wrap: pretty;   /* evita palabras huérfanas en la última línea */
 }
 .hero .meta .niebla { display: block; font-size: 16px; margin-top: 4px; font-weight: 400; }
 
@@ -227,6 +228,11 @@ nav.links a:hover { color: var(--hueso); }
   .hero h1 { font-size: clamp(54px, 13vw, 96px); }
   .hero .meta { margin-top: 18px; font-size: 17px; }
   .hero .meta .niebla { font-size: 15px; }
+  /* En celular la fecha partía dejando "AM" solo en un renglón (y "Mexico"
+     en inglés). En vez de pelearse con el salto, se le dice dónde partir:
+     fecha arriba, hora abajo — y el · sobra porque ya no van en línea. */
+  .hero .meta-sep { display: none; }
+  .hero .meta-parte { display: block; }
   .countdown { margin-top: 22px; }
   .count-cell { padding: 13px 4px 11px; }
   .count-cell b { font-size: clamp(26px, 7.5vw, 40px); }
@@ -263,6 +269,7 @@ nav.links a:hover { color: var(--hueso); }
 .gancho-sub {
   max-width: 44ch; margin: 0 auto;
   font-size: 17px; color: var(--niebla);
+  text-wrap: pretty;
 }
 .gancho-sub b { color: var(--hueso); font-weight: 600; }
 
@@ -361,6 +368,7 @@ nav.links a:hover { color: var(--hueso); }
 
 .gancho-proyeccion {
   margin-top: 14px; font-size: 16px; color: var(--niebla);
+  text-wrap: pretty;
   max-width: 46ch; margin-left: auto; margin-right: auto;
 }
 .gancho-proyeccion b { color: var(--hueso); font-weight: 700; }

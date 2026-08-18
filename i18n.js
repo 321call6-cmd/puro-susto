@@ -24,8 +24,8 @@ const TEXTOS = {
     'pie.links': '<a href="la-noche.html">La noche</a> · <a href="premios.html">Premios y votación</a> · Dudas: por WhatsApp.',
 
     /* ---- Hero ---- */
-    'hero.meta': 'Sábado 31 de octubre 2026 · 6:00 PM – 1:00 AM',
-    'hero.lugar': 'Salón Castilla · Blvd. Viñas del Mar, Tijuana',
+    'hero.meta': 'Sábado 31 de octubre 2026<span class="meta-sep"> · </span><span class="meta-parte">6:00 PM – 1:00 AM</span>',
+    'hero.lugar': 'Salón Castilla<span class="meta-sep"> · </span><span class="meta-parte">Blvd. Viñas del Mar, Tijuana</span>',
     'hero.cta': 'Regístrate y prepara tu disfraz 😈',
     'hero.agendar': 'Agendar',
     'hero.compartir': 'Pasar la invitación',
@@ -186,6 +186,8 @@ const TEXTOS = {
     'faq.a5': 'Al confirmar te escribimos <b>por WhatsApp</b> con los datos. Por seguridad, nunca se publican en este sitio.',
     'faq.q6': '¿Cómo funcionan los premios?',
     'faq.a6': 'Son <b>6 trofeos esqueleto</b>: 4 se votan desde el celular (el mejor disfraz además gana el premio en efectivo) y 2 comodines los deciden los anfitriones en vivo. Detalles en <a href="premios.html">Premios</a>.',
+    'faq.q8': '¿Hasta cuándo me puedo registrar?',
+    'faq.a8': 'El registro se cierra el <b>miércoles 28 de octubre a medianoche</b>, tres días antes. No es capricho: hay que encargar la comida con número cerrado. Si se te pasa, escríbele a Sandy y lo vemos — pero no prometemos gorditas.',
     'faq.q7': 'Confirmé y no puedo ir 😢',
     'faq.a7': 'Avísanos por WhatsApp lo antes posible: tu lugar afecta la cuota de los demás.',
 
@@ -230,8 +232,8 @@ const TEXTOS = {
     'nav.lugar': 'Venue',
     'pie.links': '<a href="la-noche.html">The night</a> · <a href="premios.html">Prizes &amp; voting</a> · Questions: on WhatsApp.',
 
-    'hero.meta': 'Saturday, October 31, 2026 · 6:00 PM – 1:00 AM',
-    'hero.lugar': 'Salón Castilla · Blvd. Viñas del Mar, Tijuana, Mexico',
+    'hero.meta': 'Saturday, October 31, 2026<span class="meta-sep"> · </span><span class="meta-parte">6:00 PM – 1:00 AM</span>',
+    'hero.lugar': 'Salón Castilla<span class="meta-sep"> · </span><span class="meta-parte">Blvd. Viñas del Mar, Tijuana, Mexico</span>',
     'hero.cta': 'Sign up and get that costume ready 😈',
     'hero.agendar': 'Save the date',
     'hero.compartir': 'Share invite',
@@ -384,6 +386,8 @@ const TEXTOS = {
     'faq.a5': 'Once you confirm we message you <b>on WhatsApp</b> with the details. For safety, they are never published on this site.',
     'faq.q6': 'How do the prizes work?',
     'faq.a6': "There are <b>6 skeleton trophies</b>: 4 are voted from your phone (best costume also takes the cash prize) and 2 wildcards are decided live by the hosts. Details under <a href=\"premios.html\">Prizes</a>.",
+    'faq.q8': "What's the deadline to sign up?",
+    'faq.a8': 'RSVPs close <b>Wednesday, October 28 at midnight</b>, three days out. Not arbitrary: the food has to be ordered with a final headcount. If you miss it, message Sandy and we\'ll see — but no promises on food.',
     'faq.q7': "I confirmed but I can't make it 😢",
     'faq.a7': 'Tell us on WhatsApp as soon as you can: your spot affects everyone else\'s share.',
 
