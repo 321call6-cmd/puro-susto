@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=10">
+  <link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
 
@@ -100,10 +100,16 @@
     <div class="count-cell"><b id="cd-s">—</b><span data-i18n="cd.seg">seg</span></div>
   </div>
 
+  <!-- El botón principal es lo primero que ve quien entra: tiene que pesar
+       mucho más que los otros dos. Antes los tres eran del mismo tamaño y el
+       ojo no sabía cuál era EL botón. Ahora manda uno y los otros dos bajan
+       a una segunda fila, chiquitos. -->
   <div class="cta-row">
-    <a class="btn btn-rojo" href="#asistencia" data-i18n="hero.cta">¿Te atreves? Confirma</a>
-    <a class="btn btn-fantasma" href="#" id="btn-calendario" data-i18n="hero.agendar">Agendar</a>
-    <a class="btn btn-fantasma" href="#" id="btn-compartir" data-i18n="hero.compartir">Pasar la invitación</a>
+    <a class="btn btn-rojo btn-gigante" href="#asistencia" data-i18n="hero.cta">Regístrate y prepara tu disfraz 😈</a>
+    <div class="cta-secundarias">
+      <a class="btn btn-fantasma btn-chico" href="#" id="btn-calendario" data-i18n="hero.agendar">Agendar</a>
+      <a class="btn btn-fantasma btn-chico" href="#" id="btn-compartir" data-i18n="hero.compartir">Pasar la invitación</a>
+    </div>
   </div>
 </section>
 
@@ -321,7 +327,7 @@
   <p style="font-size: 13px;" data-i18n-html="pie.links"></p>
 </footer>
 
-<script src="i18n.js?v=3"></script>
+<script src="i18n.js?v=4"></script>
 <script src="app.js?v=15"></script>
 </body>
 </html>

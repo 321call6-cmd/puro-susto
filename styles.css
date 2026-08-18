@@ -206,14 +206,32 @@ nav.links a:hover { color: var(--hueso); }
   text-transform: uppercase; color: var(--niebla);
 }
 
-.hero .cta-row { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+/* Jerarquía del hero: UN botón manda y los otros dos son de servicio.
+   Antes los tres pesaban igual y el ojo no sabía cuál era EL botón. */
+.hero .cta-row {
+  margin-top: 34px;
+  display: flex; flex-direction: column; align-items: center; gap: 22px;
+  width: 100%;
+}
+.hero .cta-row .btn-gigante { margin-top: 0; width: 100%; max-width: 440px; }
+.cta-secundarias { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
 /* En celular el hero ocupaba casi toda la pantalla y "El trato" quedaba
    entero abajo del doblez: la gente entraba, veía la portada y se salía.
    Bajándolo un poco, el kicker rojo asoma y pide scroll. */
+/* En celular el hero se comía la pantalla y el botón principal caía justo
+   en el filo del doblez (medido: bajaba hasta 699px con ~660 visibles en un
+   iPhone). Todo lo de arriba se aprieta para subirlo. */
 @media (max-width: 720px) {
-  .hero { min-height: 78vh; padding: 76px 22px 46px; }
-  .hero .cta-row { margin-top: 28px; }
+  .hero { min-height: 74vh; padding: 64px 22px 40px; }
+  .hero h1 { font-size: clamp(54px, 13vw, 96px); }
+  .hero .meta { margin-top: 18px; font-size: 17px; }
+  .hero .meta .niebla { font-size: 15px; }
+  .countdown { margin-top: 22px; }
+  .count-cell { padding: 13px 4px 11px; }
+  .count-cell b { font-size: clamp(26px, 7.5vw, 40px); }
+  .count-cell span { margin-top: 5px; font-size: 11px; letter-spacing: 1.5px; }
+  .hero .cta-row { margin-top: 24px; gap: 20px; }
 }
 
 /* ---------- EL GANCHO ----------
@@ -387,6 +405,10 @@ nav.links a:hover { color: var(--hueso); }
 /* El botón que la gente no veía. Ahora es el objeto más grande de la sección.
    OJO: tiene que ir DESPUÉS de .btn — misma especificidad, gana el último.
    Estuvo arriba y .btn le ganaba el tamaño: el "gigante" salía normalito. */
+/* Botones de servicio del hero. Igual que .btn-gigante: va DESPUÉS de .btn
+   o .btn le gana el tamaño y el "chico" sale del tamaño normal. */
+.btn-chico { font-size: 16px; padding: 11px 22px; }
+
 .btn-gigante {
   margin-top: 26px;
   font-size: clamp(20px, 5.2vw, 26px);
@@ -399,6 +421,54 @@ nav.links a:hover { color: var(--hueso); }
 @media (max-width: 560px) {
   /* Con 40px de padding por lado el 😈 se caía solo al segundo renglón. */
   .btn-gigante { width: 100%; padding: 20px 14px; }
+}
+
+/* ---------- El botón del hero: el que tiene que llamar ----------
+   Es lo primero que ve la gente y de él depende que se registren, así que
+   es el ÚNICO elemento del sitio con animación fuerte. Tres capas que se
+   refuerzan sin encimarse:
+     1. LATIDO — un doble golpe de corazón, no un rebote parejo. El patrón
+        irregular es lo que el ojo cacha; un pulso uniforme se vuelve fondo.
+     2. ANILLO — una onda roja que sale del botón y se disuelve.
+     3. GOTEO — dos gotas de sangre que escurren del borde de abajo.
+   El botón del gancho lleva solo el anillo: si los dos latieran, ninguno
+   destacaría. */
+.hero .btn-gigante {
+  position: relative;
+  animation: pulso-cta 2.6s ease-out infinite, latido 2.6s ease-in-out infinite;
+}
+@keyframes latido {
+  0%, 34%, 100% { transform: scale(1);     }
+  7%            { transform: scale(1.055); }
+  15%           { transform: scale(0.995); }
+  22%           { transform: scale(1.035); }
+  30%           { transform: scale(1);     }
+}
+
+/* Las gotas. Salen en momentos distintos para que no parezca un metrónomo. */
+.hero .btn-gigante::before,
+.hero .btn-gigante::after {
+  content: '';
+  position: absolute; bottom: -3px;
+  width: 9px; height: 11px;
+  background: var(--rojo-sangre);
+  border-radius: 50% 50% 50% 50% / 38% 38% 62% 62%;
+  box-shadow: 0 0 8px rgba(193, 18, 31, 0.8);
+  pointer-events: none;
+}
+.hero .btn-gigante::before { left: 24%;  animation: gotear 3.4s ease-in infinite 0.5s; }
+.hero .btn-gigante::after  { right: 30%; animation: gotear 3.4s ease-in infinite 2.1s; }
+@keyframes gotear {
+  0%,  60% { transform: translateY(0) scale(0.3);  opacity: 0; }
+  66%      { transform: translateY(2px) scale(1);  opacity: 1; }
+  88%      { transform: translateY(16px) scale(0.9); opacity: 0.85; }
+  100%     { transform: translateY(24px) scale(0.35); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .btn-gigante { animation: none; }
+  .hero .btn-gigante::before,
+  .hero .btn-gigante::after { display: none; }
 }
 
 /* ---------- Tarjetas ---------- */

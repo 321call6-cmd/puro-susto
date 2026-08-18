@@ -26,7 +26,7 @@ const TEXTOS = {
     /* ---- Hero ---- */
     'hero.meta': 'Sábado 31 de octubre 2026 · 6:00 PM – 1:00 AM',
     'hero.lugar': 'Salón Castilla · Blvd. Viñas del Mar, Tijuana',
-    'hero.cta': '¿Te atreves? Confirma',
+    'hero.cta': 'Regístrate y prepara tu disfraz 😈',
     'hero.agendar': 'Agendar',
     'hero.compartir': 'Pasar la invitación',
     'cd.dias': 'días',
@@ -232,7 +232,7 @@ const TEXTOS = {
 
     'hero.meta': 'Saturday, October 31, 2026 · 6:00 PM – 1:00 AM',
     'hero.lugar': 'Salón Castilla · Blvd. Viñas del Mar, Tijuana, Mexico',
-    'hero.cta': 'Dare to come? RSVP',
+    'hero.cta': 'Sign up and start that costume 😈',
     'hero.agendar': 'Add to calendar',
     'hero.compartir': 'Share the invite',
     'cd.dias': 'days',
