@@ -19,6 +19,35 @@ const WHATSAPP_JUEGOS = '525518103139'; // Pau
 const JAM_URL_MANUAL = '';
 const ALBUM_URL_MANUAL = '';
 
+/* 31-oct: hoja "PURO SUSTO - Disfraces" (Nombre | Disfraz), compartida solo
+   lectura por link. Los anfitriones la llenan al llegar cada quien y el sitio
+   pinta "Sandra · Bruja" en lápidas y votación. No pasa por el Apps Script:
+   se lee como CSV público. Si falla, el sitio sigue igual (solo nombres). */
+const DISFRACES_CSV_URL =
+  'https://docs.google.com/spreadsheets/d/1_lAcHwWvFeFz_h00XuI2U7MKFSUbHv6YHOJgFrw7hsE/gviz/tq?tqx=out:csv&headers=1';
+let disfracesCache = {};     // nombre normalizado -> disfraz
+
+async function cargarDisfraces() {
+  if (!DISFRACES_CSV_URL) return {};
+  try {
+    const r = await fetch(DISFRACES_CSV_URL + '&_=' + Date.now(), { cache: 'no-store' });
+    const txt = await r.text();
+    const mapa = {};
+    txt.split(/\r?\n/).slice(1).forEach((linea) => {
+      const celdas = linea.match(/("([^"]|"")*"|[^,]*)(,|$)/g) || [];
+      const limpia = (c) => c.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
+      const nombre = limpia(celdas[0] || '');
+      const disfraz = limpia(celdas[1] || '');
+      if (nombre && disfraz) mapa[normalizarNombre(nombre)] = disfraz;
+    });
+    disfracesCache = mapa;
+  } catch (e) {
+    disfracesCache = {};
+  }
+  return disfracesCache;
+}
+const disfrazDe = (nombre) => disfracesCache[normalizarNombre(nombre)] || '';
+
 /* Solo se usa si la hoja no responde. La fuente de verdad es la pestaña
    Gastos; esto es el paracaídas para que el sitio nunca muestre $0. */
 const FALLBACK_GASTOS = [
@@ -396,6 +425,7 @@ function pintarConfirmados(lista) {
         <span class="lapida-num">${escapeHtml(t('conf.numero', { n: i + 1 }))}</span>
         <svg class="lapida-monstruo" viewBox="0 0 24 24" aria-hidden="true"><use href="#${monstruoDe(p.nombre)}"/></svg>
         <span class="lapida-nombre">${escapeHtml(p.nombre)}</span>
+        ${disfrazDe(p.nombre) ? `<span class="lapida-disfraz">${escapeHtml(disfrazDe(p.nombre))}</span>` : ''}
         ${conQuien}${etiqueta}
       </div>`;
     })
@@ -539,6 +569,7 @@ async function cargarDatos() {
     necesitaConfirmados ? apiGet('confirmados') : null,
     necesitaStats ? apiGet('cuota') : null,
     necesitaStats ? apiGet('bote') : null,
+    necesitaConfirmados ? cargarDisfraces() : null,
   ]);
 
   if (necesitaConfirmados) {
@@ -791,7 +822,10 @@ function despertarVotacion() {
       <h3 style="font-size:20px;">${t(cat.clave)}</h3>
       <div class="candidatos">
         ${candidatos
-          .map((p) => `<button type="button" class="candidato" data-nombre="${escapeHtml(p.nombre)}">${escapeHtml(p.nombre)}</button>`)
+          .map((p) => {
+            const d = disfrazDe(p.nombre);
+            return `<button type="button" class="candidato" data-nombre="${escapeHtml(p.nombre)}">${escapeHtml(p.nombre)}${d ? `<small>${escapeHtml(d)}</small>` : ''}</button>`;
+          })
           .join('') || `<span class="niebla">${escapeHtml(t('prem.sinCandidatos'))}</span>`}
       </div>
     </div>`

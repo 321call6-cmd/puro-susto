@@ -795,6 +795,11 @@ details.faq p b, details.faq p strong { color: var(--hueso); }
 }
 .candidato:hover { border-color: var(--rojo-sangre); }
 .candidato.sel { background: var(--rojo-sangre); border-color: var(--rojo-sangre); font-weight: 700; }
+/* 31-oct: el disfraz debajo del nombre, para que quien no conoce a la persona
+   sepa por quién vota. Viene de la hoja "Disfraces". */
+.candidato small { display: block; font-size: 13px; color: var(--niebla); font-weight: 500; margin-top: 2px; }
+.candidato.sel small { color: rgba(255,255,255,.85); }
+.lapida-disfraz { display: block; font-size: 13px; color: var(--niebla); margin-top: 2px; }
 
 /* ---------- Mapa ---------- */
 .mapa-frame {
