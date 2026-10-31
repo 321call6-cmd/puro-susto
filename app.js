@@ -22,9 +22,8 @@ const ALBUM_URL_MANUAL = '';
 /* Solo se usa si la hoja no responde. La fuente de verdad es la pestaña
    Gastos; esto es el paracaídas para que el sitio nunca muestre $0. */
 const FALLBACK_GASTOS = [
-  { concepto: 'Renta de la palapa', tipo: 'FIJO', monto: 300 },
-  { concepto: 'Mesas y sillas', tipo: 'FIJO', monto: 200 },
-  { concepto: 'Premio', tipo: 'POR PERSONA', monto: 61 },
+  { concepto: 'Premio', tipo: 'POR PERSONA', monto: 100 },
+  { concepto: 'Gastos (palapa y sillas)', tipo: 'POR PERSONA', monto: 50 },
 ];
 
 const FECHA_FIESTA = new Date('2026-10-31T18:00:00-07:00');
@@ -51,8 +50,7 @@ const MAX_PEQUES = 4;
 
 const CATEGORIAS_VOTO = [
   { id: 'mejor', clave: 'prem.catMejor' },
-  { id: 'creativo', clave: 'prem.catCreativo' },
-  { id: 'ridiculo', clave: 'prem.catRidiculo' },
+  { id: 'creativo', clave: 'prem.catDivertido' },  // id se conserva por el backend; etiqueta "Más divertido"
   { id: 'terrorifico', clave: 'prem.catTerrorifico' },
 ];
 
@@ -111,7 +109,7 @@ let confirmadosCache = [];
 let personasCache = [];      // lista aplanada: adultos + peques
 let adultosCache = 0;        // los que pagan (autoridad: B13 de la hoja)
 let gastosCache = { totalFijo: 0, totalPP: 0 };
-let premioPorPersona = 61;   // se refresca desde la hoja
+let premioPorPersona = 100;   // se refresca desde la hoja
 
 const registroCerrado = () => new Date() > FECHA_CIERRE_REGISTRO;
 

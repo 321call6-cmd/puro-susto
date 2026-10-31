@@ -75,7 +75,6 @@
     <a class="nav-logo" href="#top">Puro Susto</a>
     <nav class="links">
       <a href="#asistencia" data-i18n="nav.confirmar">Confirmar</a>
-      <a href="#cuota" data-i18n="nav.cuota">Cuota</a>
       <a href="la-noche.html" data-i18n="nav.noche">La noche</a>
       <a href="premios.html" data-i18n="nav.premios">Premios</a>
       <a href="#lugar" data-i18n="nav.lugar">Lugar</a>
@@ -122,9 +121,9 @@
     <span class="gancho-kicker" data-i18n="hoy.kicker">Es hoy</span>
     <h2 class="gancho-titulo" data-i18n="hoy.titulo">Lo que necesitas saber</h2>
     <div class="stats-row" style="margin-top: 24px;">
-      <div class="stat stat-rojo"><b>🍲</b><span data-i18n-html="hoy.guisado"><b>Trae un guisado</b> y lo que vayas a tomar</span></div>
-      <div class="stat"><b id="hoy-cuota">—</b><span data-i18n="hoy.cuota">cuota por persona · palapa, sillas y trofeos</span></div>
-      <div class="stat"><b id="hoy-bote">—</b><span data-i18n="hoy.bote">premio al mejor disfraz 💰 · se vota en la fiesta</span></div>
+      <div class="stat stat-rojo"><b id="hoy-bote">—</b><span data-i18n="hoy.bote">premio al mejor disfraz 🏆 hasta ahora</span></div>
+      <div class="stat"><b id="hoy-cuota">—</b><span data-i18n="hoy.cuota">entrada por adulto · $100 al premio, $50 gastos</span></div>
+      <div class="stat"><b>🍲</b><span data-i18n-html="hoy.guisado"><b>Trae un guisado</b> y lo que vayas a tomar</span></div>
     </div>
     <p class="gancho-sub mt-2" data-i18n-html="hoy.sub"></p>
   </div>
@@ -221,7 +220,7 @@
 
     <div class="stats-row">
       <div class="stat stat-rojo"><b id="stat-personas">—</b><span data-i18n="conf.personas">personas que pagan</span></div>
-      <div class="stat"><b id="stat-cuota">—</b><span data-i18n="conf.cuota">cuota por persona (en vivo)</span></div>
+      <div class="stat"><b id="stat-cuota">—</b><span data-i18n="conf.cuota">entrada por adulto</span></div>
       <div class="stat"><b id="stat-bote">—</b><span data-i18n="conf.bote">premio al mejor disfraz 💰</span></div>
     </div>
 
@@ -234,20 +233,6 @@
   </div>
 </section>
 
-<section id="cuota" style="padding-top: 0;">
-  <div class="wrap">
-    <div class="card" style="max-width: 560px; margin: 0 auto;">
-        <h3 data-i18n="gastos.titulo">Desglose de gastos</h3>
-        <p class="caption" data-i18n="gastos.caption">Transparencia total: todo gasto aparece aquí</p>
-        <table class="gastos">
-          <thead><tr><th data-i18n="gastos.concepto">Concepto</th><th data-i18n="gastos.tipo">Tipo</th><th style="text-align:right" data-i18n="gastos.monto">Monto</th></tr></thead>
-          <tbody id="tabla-gastos">
-            <tr><td class="niebla" colspan="3" data-i18n="gastos.cargando">Cargando gastos…</td></tr>
-          </tbody>
-        </table>
-    </div>
-  </div>
-</section>
 
 <!-- ==================== LUGAR ==================== -->
 <section id="lugar" style="padding-top: 0;">
