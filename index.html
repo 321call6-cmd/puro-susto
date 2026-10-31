@@ -105,53 +105,28 @@
        ojo no sabía cuál era EL botón. Ahora manda uno y los otros dos bajan
        a una segunda fila, chiquitos. -->
   <div class="cta-row">
-    <a class="btn btn-rojo btn-gigante" href="#asistencia" data-i18n="hero.cta">Regístrate y prepara tu disfraz 😈</a>
+    <a class="btn btn-rojo btn-gigante" href="premios.html#votacion" data-i18n="hero.cta">Votar por el mejor disfraz 🏆</a>
     <div class="cta-secundarias">
-      <a class="btn btn-fantasma btn-chico" href="#" id="btn-calendario" data-i18n="hero.agendar">Agendar</a>
-      <a class="btn btn-fantasma btn-chico" href="#" id="btn-compartir" data-i18n="hero.compartir">Pasar la invitación</a>
+      <a class="btn btn-fantasma btn-chico" href="#asistencia" data-i18n="hero.registro">¿Aún no te registras? Aquí</a>
     </div>
   </div>
 </section>
 
-<!-- ==================== EL GANCHO ====================
-     Va pegado al hero, antes que cualquier otra cosa: es el primer bloque
-     que ve quien entra.
-
-     La primera versión vendía el ahorro ("entre más seamos, menos pagas").
-     Estaba mal calibrada: a este grupo no le duele la cuota, y hablarles de
-     dinero hacía sonar la fiesta a vaquita. Lo que sí mueve es la gloria —
-     ganar el concurso — y un premio que se acumula con cada quien que cae.
-     La cuota sigue a la vista, pero en chico: la gente tiene derecho a saber
-     a qué le dice que sí, solo que ya no es el argumento. -->
-<section id="gancho" class="gancho">
+<!-- ==================== LO DE HOY ====================
+     31-oct: se reemplazó el gancho (barra, proyección, "se acumula") por
+     tres cosas y ya. La gente ya va; solo necesita saber qué traer, cuánto
+     es y dónde votar. -->
+<section id="hoy" class="gancho">
   <svg class="monster-bg" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-calabaza"/></svg>
   <div class="wrap">
-    <span class="gancho-kicker" data-i18n="gancho.kicker">Truco o trato</span>
-    <h2 class="gancho-titulo" data-i18n="gancho.titulo">El mejor disfraz se lleva el premio</h2>
-    <p class="gancho-sub" data-i18n-html="gancho.sub"></p>
-
-    <div class="gancho-premio">
-      <span class="gancho-premio-label" data-i18n="gancho.premioLabel">El premio se acumula</span>
-      <span class="gancho-flecha" aria-hidden="true">↑</span>
-      <b class="gancho-monto" id="gancho-premio">—</b>
-      <span class="gancho-premio-pie" id="gancho-premio-pie"></span>
+    <span class="gancho-kicker" data-i18n="hoy.kicker">Es hoy</span>
+    <h2 class="gancho-titulo" data-i18n="hoy.titulo">Lo que necesitas saber</h2>
+    <div class="stats-row" style="margin-top: 24px;">
+      <div class="stat stat-rojo"><b>🍲</b><span data-i18n-html="hoy.guisado"><b>Trae un guisado</b> y lo que vayas a tomar</span></div>
+      <div class="stat"><b id="hoy-cuota">—</b><span data-i18n="hoy.cuota">cuota por persona · palapa, sillas y trofeos</span></div>
+      <div class="stat"><b id="hoy-bote">—</b><span data-i18n="hoy.bote">premio al mejor disfraz 💰 · se vota en la fiesta</span></div>
     </div>
-
-    <div class="gancho-barra-bloque">
-      <div class="gancho-barra-etiquetas">
-        <span id="gancho-somos">—</span>
-        <span class="niebla" id="gancho-meta">—</span>
-      </div>
-      <!-- La barra es sangre llenándose: gotea en la punta que avanza -->
-      <div class="gancho-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="gancho-barra">
-        <div class="gancho-barra-relleno sin-sangre" id="gancho-barra-relleno"></div>
-      </div>
-      <p class="gancho-proyeccion" id="gancho-proyeccion"></p>
-    </div>
-
-    <div class="gancho-cierre" id="gancho-cierre"></div>
-
-    <a class="btn btn-rojo btn-gigante" href="#asistencia" id="gancho-cta" data-i18n="gancho.cta">Regístrate y prepara tu disfraz 😈</a>
+    <p class="gancho-sub mt-2" data-i18n-html="hoy.sub"></p>
   </div>
 </section>
 
@@ -171,7 +146,6 @@
       <!-- Una fila = una persona que paga. Se quitó el selector de
            acompañantes: de ahí nacían los duplicados (alguien se registraba
            y además lo registraba otro como acompañante). -->
-      <p class="aviso-solo-tu" data-i18n-html="rsvp.soloTu"></p>
 
       <form id="form-rsvp">
         <label for="f-nombre" data-i18n="rsvp.nombre">Tu nombre completo</label>
@@ -188,9 +162,8 @@
           <option value="1" data-i18n="rsvp.disfraz.no">No — le meto $200 MXN al premio 😈</option>
         </select>
 
-        <!-- Los peques van escondidos a propósito: el camino fácil es
-             registrarse solo. Quien de verdad trae niños da un clic extra. -->
-        <button type="button" class="link-peques" id="btn-peques" data-i18n="rsvp.peques.abrir">+ Traigo peques que no pagan</button>
+        <!-- 31-oct: el botón de peques se quitó para simplificar; la caja
+             sigue (oculta) para que app.js no cambie. -->
 
         <div id="peques-box" class="hidden peques-box">
           <p class="niebla" style="font-size:14px;" data-i18n-html="rsvp.peques.nota"></p>
@@ -262,8 +235,7 @@
 
 <section id="cuota" style="padding-top: 0;">
   <div class="wrap">
-    <div class="grid-2">
-      <div class="card">
+    <div class="card" style="max-width: 560px; margin: 0 auto;">
         <h3 data-i18n="gastos.titulo">Desglose de gastos</h3>
         <p class="caption" data-i18n="gastos.caption">Transparencia total: todo gasto aparece aquí</p>
         <table class="gastos">
@@ -272,29 +244,6 @@
             <tr><td class="niebla" colspan="3" data-i18n="gastos.cargando">Cargando gastos…</td></tr>
           </tbody>
         </table>
-      </div>
-      <div class="card">
-        <h3 data-i18n="cuota.titulo">¿Cómo se calcula tu cuota?</h3>
-        <p class="mt-1" data-i18n-html="cuota.explica"></p>
-        <p class="mt-2" id="cuota-formula" style="font-size: 20px; font-weight: 600;"></p>
-        <p class="mt-2 niebla" style="font-size: 15px;" data-i18n-html="cuota.nota"></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== EXPLORA ==================== -->
-<section id="explora" style="padding-top: 0;">
-  <div class="wrap">
-    <div class="grid-2">
-      <a class="card card-link" href="la-noche.html">
-        <svg><use href="#i-bruja"/></svg>
-        <div><h3 data-i18n="explora.noche">La noche completa →</h3><p class="niebla" data-i18n="explora.nocheDesc"></p></div>
-      </a>
-      <a class="card card-link" href="premios.html">
-        <svg><use href="#i-calavera"/></svg>
-        <div><h3 data-i18n="explora.premios">Premios y votación →</h3><p class="niebla" data-i18n="explora.premiosDesc"></p></div>
-      </a>
     </div>
   </div>
 </section>
@@ -327,7 +276,7 @@
   <p style="font-size: 13px;" data-i18n-html="pie.links"></p>
 </footer>
 
-<script src="i18n.js?v=7"></script>
-<script src="app.js?v=15"></script>
+<script src="i18n.js?v=8"></script>
+<script src="app.js?v=16"></script>
 </body>
 </html>

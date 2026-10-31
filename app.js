@@ -23,9 +23,7 @@ const ALBUM_URL_MANUAL = '';
    Gastos; esto es el paracaídas para que el sitio nunca muestre $0. */
 const FALLBACK_GASTOS = [
   { concepto: 'Renta de la palapa', tipo: 'FIJO', monto: 300 },
-  { concepto: 'Limpieza de la palapa', tipo: 'FIJO', monto: 500 },
-  { concepto: 'Mesas y sillas', tipo: 'FIJO', monto: 450 },
-  { concepto: 'Comida (gorditas, bloque para 30)', tipo: 'FIJO', monto: 3800 },
+  { concepto: 'Mesas y sillas', tipo: 'FIJO', monto: 200 },
   { concepto: 'Trofeos de esqueleto (6 pack)', tipo: 'FIJO', monto: 436 },
   { concepto: 'Premio', tipo: 'POR PERSONA', monto: 30 },
 ];
@@ -35,7 +33,8 @@ const FECHA_FIN = new Date('2026-11-01T01:00:00-07:00');
 
 /* El registro cierra 3 días antes para poder encargar la comida.
    Miércoles 28 de octubre, 11:59 PM hora de Tijuana. */
-const FECHA_CIERRE_REGISTRO = new Date('2026-10-28T23:59:59-07:00');
+/* 31-oct: se reabrió. Varios se registran al llegar (desde la tablet). */
+const FECHA_CIERRE_REGISTRO = new Date('2026-11-01T01:00:00-07:00');
 
 /* Meta de personas para la barra del gancho. No es un cupo: es el número
    contra el que se proyecta "si llegamos a X, pagas Y". Cuando se rebasa,
@@ -567,11 +566,12 @@ async function cargarDatos() {
       setText('stat-personas', adultos || '0');
       const cuotaApi = Number(cuota?.cuota || 0);
       const cuotaMostrar = cuotaApi || cuotaCon(adultos);
-      if (cuotaMostrar) pintarStat('stat-cuota', cuotaMostrar); else setText('stat-cuota', '—');
+      if (cuotaMostrar) { pintarStat('stat-cuota', cuotaMostrar); pintarStat('hoy-cuota', cuotaMostrar); } else setText('stat-cuota', '—');
 
       const boteMostrar = Number(bote?.bote || 0) || boteCon(adultos);
       boteActual = boteMostrar;
       pintarStat('stat-bote', boteMostrar);
+      pintarStat('hoy-bote', boteMostrar);
       pintarPieLista(adultos, boteMostrar);
       pintarGancho(adultos);
     }
