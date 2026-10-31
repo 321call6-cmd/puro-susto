@@ -24,8 +24,7 @@ const ALBUM_URL_MANUAL = '';
 const FALLBACK_GASTOS = [
   { concepto: 'Renta de la palapa', tipo: 'FIJO', monto: 300 },
   { concepto: 'Mesas y sillas', tipo: 'FIJO', monto: 200 },
-  { concepto: 'Trofeos de esqueleto (6 pack)', tipo: 'FIJO', monto: 436 },
-  { concepto: 'Premio', tipo: 'POR PERSONA', monto: 30 },
+  { concepto: 'Premio', tipo: 'POR PERSONA', monto: 61 },
 ];
 
 const FECHA_FIESTA = new Date('2026-10-31T18:00:00-07:00');
@@ -112,7 +111,7 @@ let confirmadosCache = [];
 let personasCache = [];      // lista aplanada: adultos + peques
 let adultosCache = 0;        // los que pagan (autoridad: B13 de la hoja)
 let gastosCache = { totalFijo: 0, totalPP: 0 };
-let premioPorPersona = 30;   // se refresca desde la hoja
+let premioPorPersona = 61;   // se refresca desde la hoja
 
 const registroCerrado = () => new Date() > FECHA_CIERRE_REGISTRO;
 
